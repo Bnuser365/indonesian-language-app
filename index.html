@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Indonesian App" />
+  <title>Indonesian Language App</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-2: #0b1728;
+      --panel: rgba(14, 27, 47, 0.92);
+      --panel-2: rgba(20, 38, 64, 0.78);
+      --text: #f5f7fb;
+      --muted: #aebbd0;
+      --line: rgba(177, 204, 255, 0.18);
+      --green: #67e8a4;
+      --green-2: #22c55e;
+      --yellow: #facc15;
+      --red: #fb7185;
+      --blue: #60a5fa;
+      --purple: #c084fc;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+      --radius: 24px;
+      --small-radius: 16px;
+      --tap: 48px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at top left, rgba(103, 232, 164, 0.16), transparent 34rem),
+        radial-gradient(circle at 85% 10%, rgba(96, 165, 250, 0.14), transparent 30rem),
+        linear-gradient(180deg, var(--bg), #050912 64%, #030712);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    }
+
+    button, textarea, input, select {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .app {
+      width: min(1060px, 100%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(103, 232, 164, 0.25), rgba(96, 165, 250, 0.16));
+      border: 1px solid var(--line);
+      box-shadow: inset 0 0 18px rgba(103, 232, 164, 0.09);
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 12px rgba(103, 232, 164, 0.4));
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.15rem, 3vw, 1.65rem);
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .score-card {
+      min-width: 138px;
+      border: 1px solid var(--line);
+      background: rgba(11, 23, 40, 0.7);
+      border-radius: 18px;
+      padding: 10px 14px;
+      text-align: right;
+      box-shadow: var(--shadow);
+    }
+
+    .score-card small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .score-card strong {
+      display: block;
+      color: var(--green);
+      font-size: 1.45rem;
+      line-height: 1.05;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(20, 38, 64, 0.88), rgba(9, 20, 35, 0.82)),
+        radial-gradient(circle at top right, rgba(103, 232, 164, 0.16), transparent 36rem);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 4vw, 30px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -130px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(103, 232, 164, 0.07);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .tab {
+      min-height: var(--tap);
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 750;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .tab:active, .btn:active { transform: scale(0.985); }
+
+    .tab.active {
+      color: #04120b;
+      background: linear-gradient(135deg, var(--green), #9ef0c2);
+      border-color: rgba(103, 232, 164, 0.8);
+      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.18);
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: clamp(16px, 3vw, 24px);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2, .panel h3 {
+      margin: 0 0 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .muted { color: var(--muted); }
+
+    .flashcard {
+      min-height: 265px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: var(--radius);
+      border: 1px solid rgba(103, 232, 164, 0.23);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(103, 232, 164, 0.17), transparent 17rem),
+        linear-gradient(160deg, rgba(14, 27, 47, 0.96), rgba(6, 12, 24, 0.95));
+      padding: 22px;
+      margin: 12px 0 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .flashcard .label {
+      color: var(--green);
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .flashcard .term {
+      font-size: clamp(2.1rem, 8vw, 4.8rem);
+      font-weight: 850;
+      letter-spacing: -0.06em;
+      line-height: 0.98;
+    }
+
+    .flashcard .answer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: clamp(1.1rem, 4vw, 1.45rem);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: var(--tap);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.055);
+      cursor: pointer;
+      font-weight: 780;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    .btn:hover { border-color: rgba(103, 232, 164, 0.42); }
+    .btn.primary { color: #03170c; background: linear-gradient(135deg, var(--green), #b9f7d4); border-color: rgba(103, 232, 164, 0.8); }
+    .btn.warn { background: rgba(250, 204, 21, 0.12); border-color: rgba(250, 204, 21, 0.3); }
+    .btn.danger { background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.28); }
+    .btn.ghost { background: transparent; }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .mini-card strong { display: block; }
+    .mini-card span { color: var(--muted); font-size: 0.91rem; }
+
+    .textarea-wrap {
+      position: relative;
+      margin-top: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 185px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      outline: none;
+      border-radius: 18px;
+      background: rgba(4, 9, 18, 0.76);
+      color: var(--text);
+      padding: 15px;
+      line-height: 1.55;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.018);
+    }
+
+    textarea:focus {
+      border-color: rgba(103, 232, 164, 0.55);
+      box-shadow: 0 0 0 4px rgba(103, 232, 164, 0.08);
+    }
+
+    .sentence-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px;
+      background: rgba(4, 9, 18, 0.7);
+    }
+
+    .segmented button {
+      min-height: 38px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .segmented button.active {
+      color: #03170c;
+      background: var(--green);
+    }
+
+    .results {
+      display: none;
+      margin-top: 16px;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    .results.show { display: block; }
+
+    .corrected {
+      border: 1px solid rgba(103, 232, 164, 0.26);
+      background: rgba(103, 232, 164, 0.07);
+      border-radius: 18px;
+      padding: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .token {
+      padding: 2px 6px;
+      margin: 0 1px;
+      border-radius: 9px;
+      display: inline-block;
+    }
+
+    .token.same { background: rgba(103, 232, 164, 0.07); }
+    .token.changed { background: rgba(250, 204, 21, 0.16); color: #fef3c7; border: 1px solid rgba(250, 204, 21, 0.18); }
+    .token.added { background: rgba(96, 165, 250, 0.16); color: #dbeafe; border: 1px solid rgba(96, 165, 250, 0.2); }
+
+    .scores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .score-box {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .score-box small { display: block; color: var(--muted); }
+    .score-box strong { font-size: 1.35rem; color: var(--green); }
+
+    .explain {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .explain p {
+      margin: 0;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+
+    .footer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 32px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(103, 232, 164, 0.08);
+      border: 1px solid rgba(103, 232, 164, 0.18);
+      color: #bdf7d6;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(120%);
+      background: rgba(3, 7, 18, 0.95);
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+      transition: transform 220ms ease;
+      z-index: 30;
+      width: max-content;
+      max-width: calc(100% - 28px);
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 800px) {
+      body { padding-left: 12px; padding-right: 12px; }
+      .topbar { align-items: flex-start; }
+      .score-card { min-width: 104px; padding: 9px 11px; }
+      .grid { grid-template-columns: 1fr; }
+      .tabs { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr; }
+      .sentence-actions { grid-template-columns: 1fr; }
+      .scores { grid-template-columns: 1fr; }
+      .footer-actions { flex-direction: column; align-items: stretch; }
+      .footer-actions .btn { width: 100%; }
+      .flashcard { min-height: 235px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" role="img">
+            <path d="M12 12h40v40H12z" fill="none" stroke="#67e8a4" stroke-width="4" rx="10"/>
+            <path d="M20 23h24M20 33h18M20 43h10" stroke="#dfffea" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Indonesian Language App</h1>
+          <p class="subtitle">Dark theme • iPhone web-ready • no install needed</p>
+        </div>
+      </div>
+      <div class="score-card" aria-live="polite">
+        <small>Total points</small>
+        <strong id="points">0</strong>
+      </div>
+    </header>
+
+    <section class="hero">
+      <span class="pill">Runs from GitHub Pages in Safari</span>
+      <nav class="tabs" aria-label="Study modes">
+        <button class="tab active" data-screen="words">Words</button>
+        <button class="tab" data-screen="phrases">Phrases</button>
+        <button class="tab" data-screen="sentences">Sentences</button>
+      </nav>
+
+      <section id="words" class="screen active" aria-labelledby="words-title">
+        <div class="grid">
+          <div class="panel">
+            <h2 id="words-title">Word cards</h2>
+            <p class="muted">Tap the card to reveal the answer. Keep building points forever.</p>
+            <div id="word-card" class="flashcard" tabindex="0" role="button" aria-label="Tap to flip word card"></div>
+            <div class="controls">
+              <button class="btn ghost" id="word-prev">Previous</button>
+              <button class="btn primary" id="word-known">I know it +10</button>
+              <button class="btn warn" id="word-review">Review -2</button>
+            </div>
+          </div>
+          <aside class="panel">
+            <h3>Quick examples</h3>
+            <div id="word-list" class="mini-list"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="phrases" class="screen" aria-labelledby="phrases-title">
+        <div class="grid">
+          <div class="panel">
+            <h2 id="phrases-title">Phrase cards</h2>
+            <p class="muted">Practice useful phrases for casual and polite conversation.</p>
+            <div id="phrase-card" class="flashcard" tabindex="0" role="button" aria-label="Tap to flip phrase card"></div>
+            <div class="controls">
+              <button class="btn ghost" id="phrase-prev">Previous</button>
+              <button class="btn primary" id="phrase-known">I know it +10</button>
+              <button class="btn warn" id="phrase-review">Review -2</button>
+            </div>
+          </div>
+          <aside class="panel">
+            <h3>Useful phrases</h3>
+            <div id="phrase-list" class="mini-list"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="sentences" class="screen" aria-labelledby="sentences-title">
+        <div class="grid">
+          <div class="panel">
+            <h2 id="sentences-title">Sentence and short paragraph practice</h2>
+            <p class="muted">Type Indonesian. Press Enter to check. Use Shift + Enter for a new line.</p>
+            <div class="toggle-row">
+              <span class="muted">Style:</span>
+              <div class="segmented" role="group" aria-label="Register toggle">
+                <button class="active" id="informal-btn" type="button">Informal</button>
+                <button id="formal-btn" type="button">Formal</button>
+              </div>
+            </div>
+            <div class="textarea-wrap">
+              <textarea id="sentence-input" spellcheck="false" placeholder="Example: saya pergi pasar ke"></textarea>
+            </div>
+            <div class="sentence-actions">
+              <button class="btn primary" id="check-sentence">Check sentence</button>
+              <button class="btn ghost" id="clear-sentence">Clear</button>
+            </div>
+
+            <div id="results" class="results" aria-live="polite">
+              <h3>Corrected version</h3>
+              <div id="corrected" class="corrected"></div>
+              <div class="scores">
+                <div class="score-box"><small>Sentence structure</small><strong id="structure-score">0%</strong></div>
+                <div class="score-box"><small>Spelling</small><strong id="spelling-score">0%</strong></div>
+                <div class="score-box"><small>Total</small><strong id="total-score">0%</strong></div>
+              </div>
+              <div id="explain" class="explain"></div>
+            </div>
+          </div>
+          <aside class="panel">
+            <h3>Try these</h3>
+            <div class="mini-list">
+              <button class="mini-card btn ghost sample" data-text="saya pergi pasar ke">saya pergi pasar ke<br><span>Reorders “ke pasar.”</span></button>
+              <button class="mini-card btn ghost sample" data-text="aku mau makn nasi">aku mau makn nasi<br><span>Fixes spelling.</span></button>
+              <button class="mini-card btn ghost sample" data-text="terima kasih saya ingin membeli buku">terima kasih saya ingin membeli buku<br><span>Good formal structure.</span></button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="footer-actions">
+        <span>Progress is saved in this browser with local storage.</span>
+        <button class="btn danger" id="reset-points">Reset points</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* APP_JS_START */
+    (function () {
+      'use strict';
+
+      var WORDS = [
+        { id: 'makan', term: 'makan', answer: 'to eat' },
+        { id: 'minum', term: 'minum', answer: 'to drink' },
+        { id: 'rumah', term: 'rumah', answer: 'house / home' },
+        { id: 'pasar', term: 'pasar', answer: 'market' },
+        { id: 'buku', term: 'buku', answer: 'book' },
+        { id: 'teman', term: 'teman', answer: 'friend' },
+        { id: 'hari', term: 'hari', answer: 'day' },
+        { id: 'besok', term: 'besok', answer: 'tomorrow' },
+        { id: 'kemarin', term: 'kemarin', answer: 'yesterday' },
+        { id: 'sekolah', term: 'sekolah', answer: 'school' },
+        { id: 'jalan', term: 'jalan', answer: 'road / to walk' },
+        { id: 'belajar', term: 'belajar', answer: 'to study / learn' }
+      ];
+
+      var PHRASES = [
+        { id: 'apa-kabar', term: 'Apa kabar?', answer: 'How are you?' },
+        { id: 'terima-kasih', term: 'Terima kasih.', answer: 'Thank you.' },
+        { id: 'sama-sama', term: 'Sama-sama.', answer: 'You are welcome.' },
+        { id: 'selamat-pagi', term: 'Selamat pagi.', answer: 'Good morning.' },
+        { id: 'permisi', term: 'Permisi.', answer: 'Excuse me.' },
+        { id: 'maaf', term: 'Maaf.', answer: 'Sorry.' },
+        { id: 'saya-tidak-mengerti', term: 'Saya tidak mengerti.', answer: 'I do not understand.' },
+        { id: 'bisa-bantu', term: 'Bisa bantu saya?', answer: 'Can you help me?' },
+        { id: 'saya-mau', term: 'Saya mau ini.', answer: 'I want this.' },
+        { id: 'di-mana', term: 'Di mana kamar mandi?', answer: 'Where is the bathroom?' }
+      ];
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function normalizeText(text) {
+        return String(text || '')
+          .replace(/\s+/g, ' ')
+          .replace(/\s+([,.!?])/g, '$1')
+          .trim();
+      }
+
+      function capitalizeSentence(text) {
+        return text.replace(/(^\s*[a-zà-ÿ])|([.!?]\s+[a-zà-ÿ])/g, function (match) {
+          return match.toUpperCase();
+        });
+      }
+
+      function tokenize(text) {
+        var matches = String(text || '').toLowerCase().match(/[a-zà-ÿ]+|[0-9]+|[^\s]/gi);
+        return matches || [];
+      }
+
+      function levenshtein(a, b) {
+        a = String(a || '').toLowerCase();
+        b = String(b || '').toLowerCase();
+        var matrix = [];
+        var i;
+        var j;
+        for (i = 0; i <= b.length; i += 1) matrix[i] = [i];
+        for (j = 0; j <= a.length; j += 1) matrix[0][j] = j;
+        for (i = 1; i <= b.length; i += 1) {
+          for (j = 1; j <= a.length; j += 1) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+              matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+              matrix[i][j] = Math.min(
+                matrix[i - 1][j - 1] + 1,
+                matrix[i][j - 1] + 1,
+                matrix[i - 1][j] + 1
+              );
+            }
+          }
+        }
+        return matrix[b.length][a.length];
+      }
+
+      var DICTIONARY = [
+        'aku', 'anda', 'apa', 'baik', 'bantu', 'bisa', 'buku', 'belajar', 'belum', 'besok', 'dan',
+        'dari', 'dengan', 'di', 'dia', 'hari', 'ini', 'ingin', 'jalan', 'kabar', 'kamar', 'kasih',
+        'ke', 'kemarin', 'makan', 'makasih', 'mau', 'membeli', 'mengerti', 'minum', 'nggak', 'nasi',
+        'pasar', 'pagi', 'permisi', 'rumah', 'sama', 'saya', 'sekolah', 'selamat', 'siang', 'sore',
+        'sudah', 'teman', 'terima', 'tidak', 'tolong', 'untuk', 'yang'
+      ];
+
+      var SPELLING_EXCEPTIONS = {
+        makn: 'makan',
+        makann: 'makan',
+        trimakasih: 'terima kasih',
+        terimakasih: 'terima kasih',
+        gk: 'nggak',
+        ga: 'nggak',
+        nggak: 'nggak',
+        enggak: 'nggak',
+        ngga: 'nggak',
+        sya: 'saya',
+        ak: 'aku',
+        dgn: 'dengan'
+      };
+
+      function bestSpelling(token) {
+        var lower = token.toLowerCase();
+        if (!/^[a-zà-ÿ]+$/i.test(lower)) return token;
+        if (SPELLING_EXCEPTIONS[lower]) return SPELLING_EXCEPTIONS[lower];
+        if (DICTIONARY.indexOf(lower) !== -1) return lower;
+        var best = lower;
+        var bestDistance = 999;
+        DICTIONARY.forEach(function (word) {
+          var distance = levenshtein(lower, word);
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            best = word;
+          }
+        });
+        if (lower.length >= 4 && bestDistance <= 1) return best;
+        if (lower.length >= 6 && bestDistance <= 2) return best;
+        return lower;
+      }
+
+      function applyRegister(text, register, notes) {
+        var out = text;
+        if (register === 'formal') {
+          out = out.replace(/\baku\b/gi, 'saya');
+          out = out.replace(/\bnggak\b|\bga\b|\bgak\b|\benggak\b/gi, 'tidak');
+          out = out.replace(/\bmakasih\b/gi, 'terima kasih');
+          if (/\baku\b|\bnggak\b|\bmakasih\b/i.test(text)) {
+            notes.push('Formal mode uses “saya,” “tidak,” and “terima kasih” more often than casual forms.');
+          }
+        } else {
+          out = out.replace(/\bsaya\b/gi, 'aku');
+          out = out.replace(/\btidak\b/gi, 'nggak');
+          if (/\bsaya\b|\btidak\b/i.test(text)) {
+            notes.push('Informal mode allows casual forms like “aku” and “nggak.”');
+          }
+        }
+        return out;
+      }
+
+      function fixWordOrder(text, notes) {
+        var out = text;
+        var before = out;
+        out = out.replace(/\b(saya|aku)\s+(pergi|jalan)\s+([a-zà-ÿ]+)\s+ke\b/gi, '$1 $2 ke $3');
+        out = out.replace(/\b(saya|aku)\s+(nasi|buku|air|kopi|teh|bahasa)\s+(makan|minum|belajar|membeli)\b/gi, '$1 $3 $2');
+        out = out.replace(/\b(makan|minum|belajar|membeli)\s+(saya|aku)\b/gi, '$2 $1');
+        if (out !== before) {
+          notes.push('Word order was adjusted so the subject usually comes before the verb, and “ke” comes before the destination.');
+        }
+        return out;
+      }
+
+      function diffHtml(original, corrected) {
+        var originalTokens = tokenize(original);
+        var correctedTokens = tokenize(corrected);
+        var output = [];
+        var originalIndex = 0;
+        correctedTokens.forEach(function (token) {
+          var lower = token.toLowerCase();
+          var foundAt = -1;
+          var i;
+          for (i = originalIndex; i < originalTokens.length; i += 1) {
+            if (originalTokens[i].toLowerCase() === lower) {
+              foundAt = i;
+              break;
+            }
+          }
+          var className = 'added';
+          if (foundAt === originalIndex) {
+            className = 'same';
+            originalIndex = foundAt + 1;
+          } else if (foundAt > originalIndex) {
+            className = 'changed';
+            originalIndex = foundAt + 1;
+          }
+          if (/^[,.!?]$/.test(token)) {
+            output.push('<span class="token ' + className + '">' + escapeHtml(token) + '</span>');
+          } else {
+            output.push('<span class="token ' + className + '">' + escapeHtml(token) + '</span>');
+          }
+        });
+        return output.join(' ');
+      }
+
+      function correctSentence(input, register) {
+        var notes = [];
+        var raw = normalizeText(input);
+        if (!raw) {
+          return {
+            corrected: '',
+            html: '',
+            structureScore: 0,
+            spellingScore: 0,
+            totalScore: 0,
+            notes: ['Type a sentence first.']
+          };
+        }
+
+        var tokens = tokenize(raw);
+        var spellingChanges = 0;
+        var correctedTokens = [];
+        tokens.forEach(function (token) {
+          if (/^[a-zà-ÿ]+$/i.test(token)) {
+            var fixed = bestSpelling(token);
+            if (fixed !== token.toLowerCase()) spellingChanges += 1;
+            fixed.split(' ').forEach(function (part) { correctedTokens.push(part); });
+          } else {
+            correctedTokens.push(token);
+          }
+        });
+
+        var corrected = normalizeText(correctedTokens.join(' '));
+        if (spellingChanges > 0) {
+          notes.push('Spelling was corrected by comparing typed words with a small Indonesian practice dictionary.');
+        }
+
+        var beforeRegister = corrected;
+        corrected = applyRegister(corrected, register, notes);
+        corrected = normalizeText(corrected);
+        var beforeOrder = corrected;
+        corrected = fixWordOrder(corrected, notes);
+        corrected = normalizeText(corrected);
+
+        if (!/[.!?]$/.test(corrected)) {
+          corrected += '.';
+          notes.push('A period was added because the sentence needed ending punctuation.');
+        }
+        var beforeCapital = corrected;
+        corrected = capitalizeSentence(corrected);
+        if (corrected !== beforeCapital) {
+          notes.push('Capitalization was adjusted at the beginning of the sentence.');
+        }
+
+        if (corrected === capitalizeSentence(raw) || corrected === raw) {
+          notes.push('This is already close. Keep practicing with longer sentences.');
+        }
+
+        var structurePenalty = 0;
+        if (beforeOrder !== corrected.replace(/[.!?]$/, '').toLowerCase() && beforeRegister !== corrected) structurePenalty += 10;
+        if (/\b(pergi|jalan)\s+\w+\s+ke\b/i.test(raw)) structurePenalty += 18;
+        if (/\b(makan|minum|membeli|belajar)\s+(saya|aku)\b/i.test(raw)) structurePenalty += 14;
+        if (!/[.!?]$/.test(raw)) structurePenalty += 7;
+
+        var spellingPenalty = Math.min(70, spellingChanges * 16);
+        var registerPenalty = beforeRegister !== corrected ? 6 : 0;
+        var structureScore = Math.max(0, 100 - structurePenalty - registerPenalty);
+        var spellingScore = Math.max(0, 100 - spellingPenalty);
+        var totalScore = Math.round((structureScore + spellingScore) / 2);
+
+        return {
+          corrected: corrected,
+          html: diffHtml(raw, corrected),
+          structureScore: structureScore,
+          spellingScore: spellingScore,
+          totalScore: totalScore,
+          notes: notes
+        };
+      }
+
+      window.IndoCore = {
+        correctSentence: correctSentence,
+        normalizeText: normalizeText,
+        bestSpelling: bestSpelling,
+        levenshtein: levenshtein
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var state = {
+          points: Number(localStorage.getItem('indo_points') || 0),
+          wordIndex: Number(localStorage.getItem('indo_word_index') || 0),
+          phraseIndex: Number(localStorage.getItem('indo_phrase_index') || 0),
+          wordFlipped: false,
+          phraseFlipped: false,
+          register: localStorage.getItem('indo_register') || 'informal'
+        };
+
+        var el = {
+          points: document.getElementById('points'),
+          tabs: Array.prototype.slice.call(document.querySelectorAll('.tab')),
+          screens: Array.prototype.slice.call(document.querySelectorAll('.screen')),
+          wordCard: document.getElementById('word-card'),
+          phraseCard: document.getElementById('phrase-card'),
+          wordList: document.getElementById('word-list'),
+          phraseList: document.getElementById('phrase-list'),
+          toast: document.getElementById('toast'),
+          input: document.getElementById('sentence-input'),
+          results: document.getElementById('results'),
+          corrected: document.getElementById('corrected'),
+          structure: document.getElementById('structure-score'),
+          spelling: document.getElementById('spelling-score'),
+          total: document.getElementById('total-score'),
+          explain: document.getElementById('explain'),
+          informalBtn: document.getElementById('informal-btn'),
+          formalBtn: document.getElementById('formal-btn')
+        };
+
+        function save() {
+          localStorage.setItem('indo_points', String(state.points));
+          localStorage.setItem('indo_word_index', String(state.wordIndex));
+          localStorage.setItem('indo_phrase_index', String(state.phraseIndex));
+          localStorage.setItem('indo_register', state.register);
+        }
+
+        function setPoints(next, message) {
+          state.points = Math.max(0, next);
+          el.points.textContent = String(state.points);
+          save();
+          if (message) showToast(message);
+        }
+
+        function showToast(message) {
+          el.toast.textContent = message;
+          el.toast.classList.add('show');
+          window.clearTimeout(showToast.timer);
+          showToast.timer = window.setTimeout(function () {
+            el.toast.classList.remove('show');
+          }, 1700);
+        }
+
+        function renderCard(kind) {
+          var list = kind === 'word' ? WORDS : PHRASES;
+          var indexKey = kind === 'word' ? 'wordIndex' : 'phraseIndex';
+          var flippedKey = kind === 'word' ? 'wordFlipped' : 'phraseFlipped';
+          var card = kind === 'word' ? el.wordCard : el.phraseCard;
+          var item = list[state[indexKey] % list.length];
+          card.innerHTML = '<div><div class="label">' + escapeHtml(kind) + '</div><div class="term">' + escapeHtml(item.term) + '</div>' +
+            (state[flippedKey] ? '<div class="answer">' + escapeHtml(item.answer) + '</div>' : '<div class="answer">Tap to reveal</div>') + '</div>';
+        }
+
+        function nextCard(kind, delta) {
+          var list = kind === 'word' ? WORDS : PHRASES;
+          var indexKey = kind === 'word' ? 'wordIndex' : 'phraseIndex';
+          var flippedKey = kind === 'word' ? 'wordFlipped' : 'phraseFlipped';
+          state[indexKey] = (state[indexKey] + delta + list.length) % list.length;
+          state[flippedKey] = false;
+          save();
+          renderCard(kind);
+        }
+
+        function markCard(kind, amount) {
+          if (amount > 0) {
+            setPoints(state.points + amount, '+10 points');
+          } else {
+            setPoints(state.points + amount, '-2 points for review');
+          }
+          nextCard(kind, 1);
+        }
+
+        function renderLists() {
+          el.wordList.innerHTML = WORDS.slice(0, 6).map(function (item) {
+            return '<div class="mini-card"><strong>' + escapeHtml(item.term) + '</strong><span>' + escapeHtml(item.answer) + '</span></div>';
+          }).join('');
+          el.phraseList.innerHTML = PHRASES.slice(0, 6).map(function (item) {
+            return '<div class="mini-card"><strong>' + escapeHtml(item.term) + '</strong><span>' + escapeHtml(item.answer) + '</span></div>';
+          }).join('');
+        }
+
+        function setRegister(value) {
+          state.register = value;
+          el.informalBtn.classList.toggle('active', value === 'informal');
+          el.formalBtn.classList.toggle('active', value === 'formal');
+          save();
+        }
+
+        function checkSentence() {
+          var result = correctSentence(el.input.value, state.register);
+          el.results.classList.add('show');
+          el.corrected.innerHTML = result.html || escapeHtml(result.corrected);
+          el.structure.textContent = result.structureScore + '%';
+          el.spelling.textContent = result.spellingScore + '%';
+          el.total.textContent = result.totalScore + '%';
+          el.explain.innerHTML = result.notes.map(function (note) {
+            return '<p>' + escapeHtml(note) + '</p>';
+          }).join('');
+
+          if (result.corrected) {
+            var earned = Math.max(1, Math.round(result.totalScore / 12));
+            var penalty = result.totalScore < 90 ? Math.ceil(state.points * ((100 - result.totalScore) / 100) * 0.04) : 0;
+            var net = earned - penalty;
+            setPoints(state.points + net, net >= 0 ? '+' + net + ' sentence points' : String(net) + ' point penalty');
+          }
+        }
+
+        el.tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            var screenId = tab.getAttribute('data-screen');
+            el.tabs.forEach(function (t) { t.classList.toggle('active', t === tab); });
+            el.screens.forEach(function (s) { s.classList.toggle('active', s.id === screenId); });
+          });
+        });
+
+        el.wordCard.addEventListener('click', function () { state.wordFlipped = !state.wordFlipped; renderCard('word'); });
+        el.phraseCard.addEventListener('click', function () { state.phraseFlipped = !state.phraseFlipped; renderCard('phrase'); });
+        el.wordCard.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); el.wordCard.click(); } });
+        el.phraseCard.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); el.phraseCard.click(); } });
+
+        document.getElementById('word-prev').addEventListener('click', function () { nextCard('word', -1); });
+        document.getElementById('word-known').addEventListener('click', function () { markCard('word', 10); });
+        document.getElementById('word-review').addEventListener('click', function () { markCard('word', -2); });
+        document.getElementById('phrase-prev').addEventListener('click', function () { nextCard('phrase', -1); });
+        document.getElementById('phrase-known').addEventListener('click', function () { markCard('phrase', 10); });
+        document.getElementById('phrase-review').addEventListener('click', function () { markCard('phrase', -2); });
+
+        document.getElementById('check-sentence').addEventListener('click', checkSentence);
+        document.getElementById('clear-sentence').addEventListener('click', function () {
+          el.input.value = '';
+          el.results.classList.remove('show');
+          el.input.focus();
+        });
+        el.input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            checkSentence();
+          }
+        });
+        document.querySelectorAll('.sample').forEach(function (button) {
+          button.addEventListener('click', function () {
+            el.input.value = button.getAttribute('data-text') || '';
+            checkSentence();
+          });
+        });
+        el.informalBtn.addEventListener('click', function () { setRegister('informal'); });
+        el.formalBtn.addEventListener('click', function () { setRegister('formal'); });
+        document.getElementById('reset-points').addEventListener('click', function () {
+          setPoints(0, 'Points reset');
+        });
+
+        el.points.textContent = String(state.points);
+        renderLists();
+        setRegister(state.register);
+        renderCard('word');
+        renderCard('phrase');
+      });
+    }());
+    /* APP_JS_END */
+  </script>
+</body>
+</html>
