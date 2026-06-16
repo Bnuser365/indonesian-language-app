@@ -3,29 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#07111f" />
+  <meta name="theme-color" content="#070b16" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Indonesian App" />
-  <title>Indonesian Language App</title>
+  <meta name="apple-mobile-web-app-title" content="Indonesian Coach" />
+  <meta name="description" content="A dark-theme Indonesian language learning app for words, phrases, sentence correction, paragraph practice, and progress tracking." />
+  <title>Indonesian Language Coach</title>
   <style>
     :root {
-      --bg: #07111f;
-      --bg-2: #0b1728;
-      --panel: rgba(14, 27, 47, 0.92);
-      --panel-2: rgba(20, 38, 64, 0.78);
-      --text: #f5f7fb;
-      --muted: #aebbd0;
-      --line: rgba(177, 204, 255, 0.18);
-      --green: #67e8a4;
-      --green-2: #22c55e;
-      --yellow: #facc15;
-      --red: #fb7185;
+      color-scheme: dark;
+      --bg: #060a14;
+      --bg-soft: #0a1020;
+      --panel: rgba(13, 22, 40, 0.92);
+      --panel-2: rgba(17, 31, 56, 0.82);
+      --panel-3: rgba(26, 45, 78, 0.72);
+      --text: #f6f8ff;
+      --muted: #aab7cf;
+      --muted-2: #76839b;
+      --line: rgba(193, 214, 255, 0.15);
+      --line-strong: rgba(178, 211, 255, 0.28);
+      --green: #70f0ae;
+      --green-deep: #16a34a;
+      --aqua: #67e8f9;
       --blue: #60a5fa;
       --purple: #c084fc;
-      --shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
-      --radius: 24px;
-      --small-radius: 16px;
+      --yellow: #facc15;
+      --orange: #fb923c;
+      --red: #fb7185;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.44);
+      --radius: 26px;
+      --radius-sm: 16px;
       --tap: 48px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -36,20 +43,26 @@
       margin: 0;
       min-height: 100%;
       background:
-        radial-gradient(circle at top left, rgba(103, 232, 164, 0.16), transparent 34rem),
-        radial-gradient(circle at 85% 10%, rgba(96, 165, 250, 0.14), transparent 30rem),
-        linear-gradient(180deg, var(--bg), #050912 64%, #030712);
+        radial-gradient(circle at 14% 0%, rgba(112, 240, 174, 0.16), transparent 31rem),
+        radial-gradient(circle at 88% 4%, rgba(96, 165, 250, 0.14), transparent 33rem),
+        radial-gradient(circle at 50% 105%, rgba(192, 132, 252, 0.11), transparent 34rem),
+        linear-gradient(180deg, #07111f 0%, #060a14 48%, #03060d 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
     body {
-      padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+      padding: max(18px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(26px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
     }
 
-    button, textarea, input, select {
+    button, input, textarea, select {
       font: inherit;
+      color: inherit;
+    }
+
+    input, textarea, select {
+      font-size: 16px;
     }
 
     button {
@@ -58,360 +71,125 @@
     }
 
     .app {
-      width: min(1060px, 100%);
+      width: min(1160px, 100%);
       margin: 0 auto;
     }
 
     .topbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
       align-items: center;
       margin-bottom: 16px;
     }
 
     .brand {
       display: flex;
-      gap: 12px;
       align-items: center;
+      gap: 12px;
+      min-width: 0;
     }
 
     .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 15px;
+      width: 52px;
+      height: 52px;
+      flex: 0 0 auto;
       display: grid;
       place-items: center;
-      background: linear-gradient(145deg, rgba(103, 232, 164, 0.25), rgba(96, 165, 250, 0.16));
-      border: 1px solid var(--line);
-      box-shadow: inset 0 0 18px rgba(103, 232, 164, 0.09);
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(112, 240, 174, 0.24), rgba(96, 165, 250, 0.14)),
+        rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line-strong);
+      box-shadow: inset 0 0 22px rgba(112, 240, 174, 0.09), 0 12px 40px rgba(0,0,0,0.32);
     }
 
-    .logo svg {
-      width: 28px;
-      height: 28px;
-      filter: drop-shadow(0 0 12px rgba(103, 232, 164, 0.4));
-    }
+    .logo svg { width: 30px; height: 30px; filter: drop-shadow(0 0 12px rgba(112, 240, 174, 0.48)); }
+
+    h1, h2, h3, p { margin-top: 0; }
 
     h1 {
-      margin: 0;
-      font-size: clamp(1.15rem, 3vw, 1.65rem);
-      letter-spacing: -0.03em;
+      margin-bottom: 3px;
+      font-size: clamp(1.22rem, 3.8vw, 1.95rem);
+      letter-spacing: -0.045em;
+      line-height: 1.04;
+    }
+
+    h2 {
+      margin-bottom: 8px;
+      font-size: clamp(1.18rem, 3.6vw, 1.6rem);
+      letter-spacing: -0.04em;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
     }
 
     .subtitle {
-      margin: 2px 0 0;
+      margin: 0;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.93rem;
+      line-height: 1.35;
     }
 
-    .score-card {
-      min-width: 138px;
+    .metrics {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      min-width: 112px;
+      padding: 10px 13px;
       border: 1px solid var(--line);
-      background: rgba(11, 23, 40, 0.7);
+      background: rgba(8, 16, 29, 0.72);
       border-radius: 18px;
-      padding: 10px 14px;
-      text-align: right;
       box-shadow: var(--shadow);
+      text-align: right;
     }
 
-    .score-card small {
-      display: block;
-      color: var(--muted);
-      font-size: 0.76rem;
-    }
+    .metric small { display: block; color: var(--muted); font-size: 0.76rem; }
+    .metric strong { display: block; font-size: 1.35rem; line-height: 1.05; color: var(--green); }
+    .metric:nth-child(2) strong { color: var(--aqua); }
+    .metric:nth-child(3) strong { color: var(--yellow); }
 
-    .score-card strong {
-      display: block;
-      color: var(--green);
-      font-size: 1.45rem;
-      line-height: 1.05;
-    }
-
-    .hero {
+    .shell {
+      position: relative;
+      overflow: hidden;
       border: 1px solid var(--line);
       background:
-        linear-gradient(135deg, rgba(20, 38, 64, 0.88), rgba(9, 20, 35, 0.82)),
-        radial-gradient(circle at top right, rgba(103, 232, 164, 0.16), transparent 36rem);
+        linear-gradient(135deg, rgba(18, 34, 60, 0.9), rgba(7, 13, 25, 0.88)),
+        radial-gradient(circle at 80% 10%, rgba(112, 240, 174, 0.12), transparent 34rem);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: clamp(18px, 4vw, 30px);
-      overflow: hidden;
-      position: relative;
+      padding: clamp(16px, 3vw, 26px);
     }
 
-    .hero::after {
+    .shell::before {
       content: "";
       position: absolute;
-      inset: auto -80px -130px auto;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background: rgba(103, 232, 164, 0.07);
-      filter: blur(10px);
+      inset: -1px;
+      background: linear-gradient(120deg, rgba(112,240,174,0.08), transparent 28%, rgba(96,165,250,0.07), transparent 68%);
       pointer-events: none;
     }
 
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 16px 0;
-    }
+    .shell > * { position: relative; z-index: 1; }
 
-    .tab {
-      min-height: var(--tap);
-      color: var(--muted);
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.035);
-      border-radius: 999px;
-      cursor: pointer;
-      font-weight: 750;
-      transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
-    }
-
-    .tab:active, .btn:active { transform: scale(0.985); }
-
-    .tab.active {
-      color: #04120b;
-      background: linear-gradient(135deg, var(--green), #9ef0c2);
-      border-color: rgba(103, 232, 164, 0.8);
-      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.18);
-    }
-
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 16px;
-    }
-
-    .panel {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: clamp(16px, 3vw, 24px);
-      box-shadow: var(--shadow);
-    }
-
-    .panel h2, .panel h3 {
-      margin: 0 0 8px;
-      letter-spacing: -0.03em;
-    }
-
-    .muted { color: var(--muted); }
-
-    .flashcard {
-      min-height: 265px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      border-radius: var(--radius);
-      border: 1px solid rgba(103, 232, 164, 0.23);
-      background:
-        radial-gradient(circle at 50% 0%, rgba(103, 232, 164, 0.17), transparent 17rem),
-        linear-gradient(160deg, rgba(14, 27, 47, 0.96), rgba(6, 12, 24, 0.95));
-      padding: 22px;
-      margin: 12px 0 16px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .flashcard .label {
-      color: var(--green);
-      text-transform: uppercase;
-      font-size: 0.76rem;
-      letter-spacing: 0.18em;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .flashcard .term {
-      font-size: clamp(2.1rem, 8vw, 4.8rem);
-      font-weight: 850;
-      letter-spacing: -0.06em;
-      line-height: 0.98;
-    }
-
-    .flashcard .answer {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: clamp(1.1rem, 4vw, 1.45rem);
-    }
-
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .btn {
-      min-height: var(--tap);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.055);
-      cursor: pointer;
-      font-weight: 780;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-    }
-
-    .btn:hover { border-color: rgba(103, 232, 164, 0.42); }
-    .btn.primary { color: #03170c; background: linear-gradient(135deg, var(--green), #b9f7d4); border-color: rgba(103, 232, 164, 0.8); }
-    .btn.warn { background: rgba(250, 204, 21, 0.12); border-color: rgba(250, 204, 21, 0.3); }
-    .btn.danger { background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.28); }
-    .btn.ghost { background: transparent; }
-
-    .mini-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .mini-card {
-      border: 1px solid var(--line);
-      background: var(--panel-2);
-      border-radius: 16px;
-      padding: 12px;
-    }
-
-    .mini-card strong { display: block; }
-    .mini-card span { color: var(--muted); font-size: 0.91rem; }
-
-    .textarea-wrap {
-      position: relative;
-      margin-top: 12px;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 185px;
-      resize: vertical;
-      border: 1px solid var(--line);
-      outline: none;
-      border-radius: 18px;
-      background: rgba(4, 9, 18, 0.76);
-      color: var(--text);
-      padding: 15px;
-      line-height: 1.55;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.018);
-    }
-
-    textarea:focus {
-      border-color: rgba(103, 232, 164, 0.55);
-      box-shadow: 0 0 0 4px rgba(103, 232, 164, 0.08);
-    }
-
-    .sentence-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .toggle-row {
+    .install-note {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
       align-items: center;
-      margin-top: 12px;
-    }
-
-    .segmented {
-      display: inline-grid;
-      grid-template-columns: 1fr 1fr;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 4px;
-      background: rgba(4, 9, 18, 0.7);
-    }
-
-    .segmented button {
-      min-height: 38px;
-      padding: 0 14px;
-      border: 0;
-      border-radius: 999px;
-      color: var(--muted);
-      background: transparent;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .segmented button.active {
-      color: #03170c;
-      background: var(--green);
-    }
-
-    .results {
-      display: none;
-      margin-top: 16px;
-      border-top: 1px solid var(--line);
-      padding-top: 16px;
-    }
-
-    .results.show { display: block; }
-
-    .corrected {
-      border: 1px solid rgba(103, 232, 164, 0.26);
-      background: rgba(103, 232, 164, 0.07);
-      border-radius: 18px;
-      padding: 14px;
-      line-height: 1.7;
-      white-space: pre-wrap;
-    }
-
-    .token {
-      padding: 2px 6px;
-      margin: 0 1px;
-      border-radius: 9px;
-      display: inline-block;
-    }
-
-    .token.same { background: rgba(103, 232, 164, 0.07); }
-    .token.changed { background: rgba(250, 204, 21, 0.16); color: #fef3c7; border: 1px solid rgba(250, 204, 21, 0.18); }
-    .token.added { background: rgba(96, 165, 250, 0.16); color: #dbeafe; border: 1px solid rgba(96, 165, 250, 0.2); }
-
-    .scores {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 14px 0;
-    }
-
-    .score-box {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 16px;
-      padding: 12px;
-    }
-
-    .score-box small { display: block; color: var(--muted); }
-    .score-box strong { font-size: 1.35rem; color: var(--green); }
-
-    .explain {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .explain p {
-      margin: 0;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 10px 12px;
-    }
-
-    .footer-actions {
-      display: flex;
       justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-top: 18px;
-      color: var(--muted);
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      border: 1px solid rgba(112, 240, 174, 0.19);
+      border-radius: 18px;
+      background: rgba(112, 240, 174, 0.06);
+      color: #dfffee;
       font-size: 0.9rem;
     }
 
@@ -419,47 +197,401 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      min-height: 32px;
-      padding: 5px 10px;
+      border: 1px solid rgba(112, 240, 174, 0.35);
+      background: rgba(112, 240, 174, 0.1);
+      color: #dfffee;
       border-radius: 999px;
-      background: rgba(103, 232, 164, 0.08);
-      border: 1px solid rgba(103, 232, 164, 0.18);
-      color: #bdf7d6;
-      font-size: 0.84rem;
-      font-weight: 700;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 18px;
+    }
+
+    .tab {
+      min-height: var(--tap);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--muted);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 850;
+      transition: transform 140ms ease, background 140ms ease, color 140ms ease, border-color 140ms ease;
+    }
+
+    .tab:active, .btn:active { transform: scale(0.985); }
+
+    .tab.active {
+      background: linear-gradient(135deg, var(--green), #b4ffd2);
+      border-color: rgba(112, 240, 174, 0.85);
+      color: #03130a;
+      box-shadow: 0 13px 34px rgba(34, 197, 94, 0.2);
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: clamp(16px, 3vw, 23px);
+      box-shadow: var(--shadow);
+    }
+
+    .panel.soft { background: var(--panel-2); }
+
+    .muted { color: var(--muted); }
+    .tiny { color: var(--muted-2); font-size: 0.8rem; }
+
+    .hero-copy {
+      margin-bottom: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .stat-card strong { display: block; font-size: 1.45rem; color: var(--green); }
+    .stat-card span { display: block; color: var(--muted); font-size: 0.82rem; }
+
+    .flashcard {
+      min-height: 272px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: var(--radius);
+      border: 1px solid rgba(112, 240, 174, 0.24);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(112, 240, 174, 0.16), transparent 18rem),
+        linear-gradient(160deg, rgba(18, 31, 54, 0.96), rgba(6, 12, 24, 0.96));
+      padding: 22px;
+      margin: 12px 0 16px;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+    }
+
+    .flashcard:focus-visible, .btn:focus-visible, .tab:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 3px;
+    }
+
+    .card-label {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(96, 165, 250, 0.1);
+      color: var(--blue);
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.7rem;
+      font-weight: 900;
+    }
+
+    .term {
+      font-size: clamp(2rem, 9vw, 4.25rem);
+      font-weight: 900;
+      letter-spacing: -0.055em;
+      line-height: 0.96;
+    }
+
+    .answer {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: clamp(1rem, 3.4vw, 1.18rem);
+      line-height: 1.45;
+    }
+
+    .example-line {
+      margin-top: 14px;
+      color: #dce9ff;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: var(--tap);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.045);
+      color: var(--text);
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 850;
+      padding: 10px 13px;
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      border-color: rgba(112, 240, 174, 0.48);
+      background: linear-gradient(135deg, rgba(112, 240, 174, 0.95), rgba(179, 255, 211, 0.92));
+      color: #03130a;
+      box-shadow: 0 12px 30px rgba(34,197,94,0.16);
+    }
+
+    .btn.ghost { color: #e6eefc; background: rgba(255,255,255,0.04); }
+    .btn.warn { border-color: rgba(250, 204, 21, 0.36); background: rgba(250, 204, 21, 0.1); color: #fff4bd; }
+    .btn.danger { border-color: rgba(251, 113, 133, 0.36); background: rgba(251, 113, 133, 0.1); color: #ffd6df; }
+    .btn.blue { border-color: rgba(96,165,250,0.36); background: rgba(96,165,250,0.11); color: #dbeafe; }
+
+    .list, .mini-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-card {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.035);
+      text-align: left;
+      line-height: 1.35;
+    }
+
+    .mini-card strong { display: block; margin-bottom: 3px; color: #f8fbff; }
+    .mini-card span, .mini-card small { display: block; color: var(--muted); }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(2, 8, 19, 0.66);
+      color: var(--text);
+      padding: 12px 13px;
+    }
+
+    .textarea {
+      min-height: 184px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .segmented button {
+      min-height: 38px;
+      border: 0;
+      border-radius: 999px;
+      padding: 6px 13px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .segmented button.active {
+      color: #06120b;
+      background: var(--green);
+      box-shadow: 0 8px 22px rgba(34, 197, 94, 0.18);
+    }
+
+    .sentence-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .results {
+      display: none;
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.035);
+      padding: 14px;
+    }
+
+    .results.show { display: block; }
+
+    .corrected {
+      min-height: 66px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(2, 8, 19, 0.56);
+      border: 1px solid rgba(112, 240, 174, 0.14);
+      line-height: 1.85;
+      font-size: 1.05rem;
+      white-space: pre-wrap;
+    }
+
+    .mark {
+      display: inline-block;
+      padding: 0.05rem 0.28rem;
+      margin: 0.04rem 0.02rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+
+    .mark.spelling { background: rgba(96, 165, 250, 0.18); border-color: rgba(96,165,250,0.32); color: #dbeafe; }
+    .mark.moved { background: rgba(192, 132, 252, 0.18); border-color: rgba(192,132,252,0.34); color: #f1ddff; }
+    .mark.punctuation { background: rgba(250, 204, 21, 0.18); border-color: rgba(250,204,21,0.34); color: #fff5c6; }
+    .mark.tone { background: rgba(251, 146, 60, 0.18); border-color: rgba(251,146,60,0.34); color: #ffead6; }
+    .mark.added { background: rgba(112, 240, 174, 0.16); border-color: rgba(112,240,174,0.32); color: #e5fff0; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .legend .mark { font-size: 0.78rem; }
+
+    .scores {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .score-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.035);
+    }
+
+    .score-box small { display: block; color: var(--muted); font-size: 0.75rem; }
+    .score-box strong { display: block; color: var(--green); font-size: 1.34rem; line-height: 1.1; }
+
+    .explain {
+      display: grid;
+      gap: 8px;
+    }
+
+    .explain p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .history-item {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(255,255,255,0.035);
+      line-height: 1.45;
+    }
+
+    .history-item strong { color: var(--green); }
+    .history-item code { color: #dbeafe; white-space: normal; }
+
+    .footer-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.86rem;
     }
 
     .toast {
       position: fixed;
       left: 50%;
       bottom: max(18px, env(safe-area-inset-bottom));
-      transform: translateX(-50%) translateY(120%);
-      background: rgba(3, 7, 18, 0.95);
-      border: 1px solid var(--line);
-      color: var(--text);
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+      z-index: 10;
+      padding: 12px 15px;
       border-radius: 999px;
-      padding: 12px 16px;
+      border: 1px solid rgba(112, 240, 174, 0.35);
+      background: rgba(4, 10, 18, 0.94);
+      color: #eafff2;
       box-shadow: var(--shadow);
-      transition: transform 220ms ease;
-      z-index: 30;
-      width: max-content;
-      max-width: calc(100% - 28px);
+      font-weight: 850;
+      max-width: calc(100vw - 28px);
+      text-align: center;
     }
 
-    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    @media (max-width: 800px) {
-      body { padding-left: 12px; padding-right: 12px; }
-      .topbar { align-items: flex-start; }
-      .score-card { min-width: 104px; padding: 9px 11px; }
-      .grid { grid-template-columns: 1fr; }
+    @media (max-width: 880px) {
+      .topbar { grid-template-columns: 1fr; }
+      .metrics { justify-content: stretch; }
+      .metric { flex: 1 1 30%; text-align: left; }
+      .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid, .grid.three, .form-grid { grid-template-columns: 1fr; }
+      .scores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .controls, .sentence-actions { grid-template-columns: 1fr; }
+      .install-note { align-items: flex-start; }
+      .flashcard { min-height: 238px; }
+    }
+
+    @media (max-width: 430px) {
+      body { padding-left: 10px; padding-right: 10px; }
+      .brand { align-items: flex-start; }
+      .logo { width: 46px; height: 46px; border-radius: 16px; }
       .tabs { grid-template-columns: 1fr; }
-      .controls { grid-template-columns: 1fr; }
-      .sentence-actions { grid-template-columns: 1fr; }
-      .scores { grid-template-columns: 1fr; }
-      .footer-actions { flex-direction: column; align-items: stretch; }
-      .footer-actions .btn { width: 100%; }
-      .flashcard { min-height: 235px; }
+      .scores, .stat-grid { grid-template-columns: 1fr; }
+      .metric { min-width: 0; }
+      .term { font-size: clamp(1.85rem, 14vw, 3.3rem); }
     }
   </style>
 </head>
@@ -469,44 +601,83 @@
       <div class="brand">
         <div class="logo" aria-hidden="true">
           <svg viewBox="0 0 64 64" role="img">
-            <path d="M12 12h40v40H12z" fill="none" stroke="#67e8a4" stroke-width="4" rx="10"/>
-            <path d="M20 23h24M20 33h18M20 43h10" stroke="#dfffea" stroke-width="4" stroke-linecap="round"/>
+            <rect x="10" y="10" width="44" height="44" rx="12" fill="none" stroke="#70f0ae" stroke-width="4" />
+            <path d="M20 23h24M20 33h18M20 43h10" stroke="#eafff2" stroke-width="4" stroke-linecap="round" />
           </svg>
         </div>
         <div>
-          <h1>Indonesian Language App</h1>
-          <p class="subtitle">Dark theme • iPhone web-ready • no install needed</p>
+          <h1>Indonesian Language Coach</h1>
+          <p class="subtitle">Dark theme • flashcards • sentence correction • paragraph practice • saved progress</p>
         </div>
       </div>
-      <div class="score-card" aria-live="polite">
-        <small>Total points</small>
-        <strong id="points">0</strong>
+      <div class="metrics" aria-live="polite">
+        <div class="metric"><small>Total points</small><strong id="points">0</strong></div>
+        <div class="metric"><small>Practice streak</small><strong id="streak">0</strong></div>
+        <div class="metric"><small>Checked today</small><strong id="checkedToday">0</strong></div>
       </div>
     </header>
 
-    <section class="hero">
-      <span class="pill">Runs from GitHub Pages in Safari</span>
+    <section class="shell">
+      <div class="install-note">
+        <span><strong>iPhone-ready:</strong> upload this single <code>index.html</code> to GitHub Pages, open in Safari, then use Share → Add to Home Screen.</span>
+        <span class="pill">No build tools needed</span>
+      </div>
+
       <nav class="tabs" aria-label="Study modes">
-        <button class="tab active" data-screen="words">Words</button>
+        <button class="tab active" data-screen="dashboard">Dashboard</button>
+        <button class="tab" data-screen="words">Words</button>
         <button class="tab" data-screen="phrases">Phrases</button>
-        <button class="tab" data-screen="sentences">Sentences</button>
+        <button class="tab" data-screen="coach">Sentence Coach</button>
+        <button class="tab" data-screen="history">History</button>
       </nav>
 
-      <section id="words" class="screen active" aria-labelledby="words-title">
+      <section id="dashboard" class="screen active" aria-labelledby="dashboard-title">
+        <div class="grid">
+          <div class="panel">
+            <span class="pill">Full version restored</span>
+            <h2 id="dashboard-title" style="margin-top:12px">Practice Indonesian in small loops</h2>
+            <p class="hero-copy">This version includes the latest feature set: word cards, phrase cards, formal/informal sentence checking, short paragraph correction, change highlights, separate sentence-structure and spelling scores, ongoing points, mistake penalties, and local progress saving.</p>
+            <div class="stat-grid">
+              <div class="stat-card"><strong id="dashPoints">0</strong><span>points earned</span></div>
+              <div class="stat-card"><strong id="dashHistory">0</strong><span>sentence checks saved</span></div>
+              <div class="stat-card"><strong id="dashWords">0</strong><span>words in your deck</span></div>
+              <div class="stat-card"><strong id="dashPhrases">0</strong><span>phrases in your deck</span></div>
+            </div>
+          </div>
+          <aside class="panel soft">
+            <h3>Fast start</h3>
+            <div class="mini-list">
+              <button class="mini-card btn ghost jump" data-target="words"><strong>1. Word cards</strong><span>Tap the card, reveal the meaning, then mark know/review.</span></button>
+              <button class="mini-card btn ghost jump" data-target="phrases"><strong>2. Phrase cards</strong><span>Practice useful formal and casual phrases.</span></button>
+              <button class="mini-card btn ghost jump" data-target="coach"><strong>3. Sentence Coach</strong><span>Type Indonesian. Press Enter to check. Shift + Enter makes a new line.</span></button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="words" class="screen" aria-labelledby="words-title">
         <div class="grid">
           <div class="panel">
             <h2 id="words-title">Word cards</h2>
-            <p class="muted">Tap the card to reveal the answer. Keep building points forever.</p>
-            <div id="word-card" class="flashcard" tabindex="0" role="button" aria-label="Tap to flip word card"></div>
+            <p class="muted">Tap the card to flip. Your progress saves on this browser.</p>
+            <select id="wordCategory" class="select" aria-label="Word category"></select>
+            <div id="wordCard" class="flashcard" tabindex="0" role="button" aria-label="Tap to flip word card"></div>
             <div class="controls">
-              <button class="btn ghost" id="word-prev">Previous</button>
-              <button class="btn primary" id="word-known">I know it +10</button>
-              <button class="btn warn" id="word-review">Review -2</button>
+              <button class="btn ghost" id="wordPrev">Previous</button>
+              <button class="btn primary" id="wordKnown">I know it +10</button>
+              <button class="btn warn" id="wordReview">Review -2</button>
             </div>
           </div>
-          <aside class="panel">
-            <h3>Quick examples</h3>
-            <div id="word-list" class="mini-list"></div>
+          <aside class="panel soft">
+            <h3>Add your own word</h3>
+            <div class="form-grid">
+              <input id="newWordTerm" class="input" placeholder="Indonesian word" />
+              <input id="newWordAnswer" class="input" placeholder="English meaning" />
+            </div>
+            <input id="newWordExample" class="input" style="margin-top:10px" placeholder="Optional example sentence" />
+            <button class="btn blue" id="addWord" style="margin-top:10px;width:100%">Add word</button>
+            <h3 style="margin-top:18px">Current deck</h3>
+            <div id="wordList" class="mini-list"></div>
           </aside>
         </div>
       </section>
@@ -515,66 +686,101 @@
         <div class="grid">
           <div class="panel">
             <h2 id="phrases-title">Phrase cards</h2>
-            <p class="muted">Practice useful phrases for casual and polite conversation.</p>
-            <div id="phrase-card" class="flashcard" tabindex="0" role="button" aria-label="Tap to flip phrase card"></div>
+            <p class="muted">Useful expressions for polite/formal and daily/informal conversation.</p>
+            <select id="phraseCategory" class="select" aria-label="Phrase category"></select>
+            <div id="phraseCard" class="flashcard" tabindex="0" role="button" aria-label="Tap to flip phrase card"></div>
             <div class="controls">
-              <button class="btn ghost" id="phrase-prev">Previous</button>
-              <button class="btn primary" id="phrase-known">I know it +10</button>
-              <button class="btn warn" id="phrase-review">Review -2</button>
+              <button class="btn ghost" id="phrasePrev">Previous</button>
+              <button class="btn primary" id="phraseKnown">I know it +10</button>
+              <button class="btn warn" id="phraseReview">Review -2</button>
             </div>
           </div>
-          <aside class="panel">
-            <h3>Useful phrases</h3>
-            <div id="phrase-list" class="mini-list"></div>
+          <aside class="panel soft">
+            <h3>Add your own phrase</h3>
+            <div class="form-grid">
+              <input id="newPhraseTerm" class="input" placeholder="Indonesian phrase" />
+              <input id="newPhraseAnswer" class="input" placeholder="English meaning" />
+            </div>
+            <input id="newPhraseExample" class="input" style="margin-top:10px" placeholder="Optional note or example" />
+            <button class="btn blue" id="addPhrase" style="margin-top:10px;width:100%">Add phrase</button>
+            <h3 style="margin-top:18px">Current deck</h3>
+            <div id="phraseList" class="mini-list"></div>
           </aside>
         </div>
       </section>
 
-      <section id="sentences" class="screen" aria-labelledby="sentences-title">
+      <section id="coach" class="screen" aria-labelledby="coach-title">
         <div class="grid">
           <div class="panel">
-            <h2 id="sentences-title">Sentence and short paragraph practice</h2>
-            <p class="muted">Type Indonesian. Press Enter to check. Use Shift + Enter for a new line.</p>
+            <h2 id="coach-title">Sentence and short paragraph practice</h2>
+            <p class="muted">Type a sentence or short paragraph. Enter checks it. Shift + Enter creates a new line.</p>
             <div class="toggle-row">
               <span class="muted">Style:</span>
               <div class="segmented" role="group" aria-label="Register toggle">
-                <button class="active" id="informal-btn" type="button">Informal</button>
-                <button id="formal-btn" type="button">Formal</button>
+                <button id="informalBtn" type="button" class="active">Informal</button>
+                <button id="formalBtn" type="button">Formal</button>
               </div>
             </div>
-            <div class="textarea-wrap">
-              <textarea id="sentence-input" spellcheck="false" placeholder="Example: saya pergi pasar ke"></textarea>
-            </div>
+            <textarea id="sentenceInput" class="textarea" spellcheck="false" autocapitalize="sentences" placeholder="Example: saya pergi pasar ke"></textarea>
             <div class="sentence-actions">
-              <button class="btn primary" id="check-sentence">Check sentence</button>
-              <button class="btn ghost" id="clear-sentence">Clear</button>
+              <button class="btn primary" id="checkSentence">Check sentence</button>
+              <button class="btn ghost" id="clearSentence">Clear</button>
             </div>
 
             <div id="results" class="results" aria-live="polite">
               <h3>Corrected version</h3>
               <div id="corrected" class="corrected"></div>
+              <div class="legend" aria-label="Correction legend">
+                <span class="mark moved">word order / moved</span>
+                <span class="mark spelling">spelling</span>
+                <span class="mark punctuation">punctuation</span>
+                <span class="mark tone">formal/informal tone</span>
+                <span class="mark added">added word</span>
+              </div>
               <div class="scores">
-                <div class="score-box"><small>Sentence structure</small><strong id="structure-score">0%</strong></div>
-                <div class="score-box"><small>Spelling</small><strong id="spelling-score">0%</strong></div>
-                <div class="score-box"><small>Total</small><strong id="total-score">0%</strong></div>
+                <div class="score-box"><small>Sentence structure</small><strong id="structureScore">0%</strong></div>
+                <div class="score-box"><small>Spelling</small><strong id="spellingScore">0%</strong></div>
+                <div class="score-box"><small>Tone/punctuation</small><strong id="toneScore">0%</strong></div>
+                <div class="score-box"><small>Total</small><strong id="totalScore">0%</strong></div>
               </div>
               <div id="explain" class="explain"></div>
             </div>
           </div>
-          <aside class="panel">
+          <aside class="panel soft">
             <h3>Try these</h3>
             <div class="mini-list">
-              <button class="mini-card btn ghost sample" data-text="saya pergi pasar ke">saya pergi pasar ke<br><span>Reorders “ke pasar.”</span></button>
-              <button class="mini-card btn ghost sample" data-text="aku mau makn nasi">aku mau makn nasi<br><span>Fixes spelling.</span></button>
-              <button class="mini-card btn ghost sample" data-text="terima kasih saya ingin membeli buku">terima kasih saya ingin membeli buku<br><span>Good formal structure.</span></button>
+              <button class="mini-card btn ghost sample" data-text="saya pergi pasar ke"><strong>saya pergi pasar ke</strong><span>Reorders “ke pasar.”</span></button>
+              <button class="mini-card btn ghost sample" data-text="aku mau makn nasi"><strong>aku mau makn nasi</strong><span>Fixes spelling.</span></button>
+              <button class="mini-card btn ghost sample" data-text="dimana kamar mandi"><strong>dimana kamar mandi</strong><span>Question punctuation + spacing.</span></button>
+              <button class="mini-card btn ghost sample" data-text="makasih aku pengen membeli buku"><strong>makasih aku pengen membeli buku</strong><span>Try Formal mode.</span></button>
+              <button class="mini-card btn ghost sample" data-text="kemarin saya pergi toko ke\nsaya beli bukku dan nasi"><strong>Short paragraph</strong><span>Multiple lines are corrected together.</span></button>
             </div>
+            <p class="tiny" style="margin-top:12px">This is a local rule-based coach, not an online translator. It works offline after the page is loaded and is meant for practice patterns.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="history" class="screen" aria-labelledby="history-title">
+        <div class="grid">
+          <div class="panel">
+            <h2 id="history-title">Practice history</h2>
+            <p class="muted">Recent sentence checks saved on this device.</p>
+            <div id="historyList" class="list"></div>
+          </div>
+          <aside class="panel soft">
+            <h3>Settings</h3>
+            <div class="mini-list">
+              <button class="btn danger" id="resetPoints">Reset points only</button>
+              <button class="btn danger" id="resetAll">Reset all saved app data</button>
+            </div>
+            <p class="tiny" style="margin-top:12px">Data is saved with browser localStorage. It stays on your iPhone/Safari unless you clear website data.</p>
           </aside>
         </div>
       </section>
 
       <div class="footer-actions">
-        <span>Progress is saved in this browser with local storage.</span>
-        <button class="btn danger" id="reset-points">Reset points</button>
+        <span>Single-file app: upload <strong>index.html</strong> to the root of your GitHub repository.</span>
+        <span class="pill" id="saveStatus">Saved locally</span>
       </div>
     </section>
   </main>
@@ -582,40 +788,97 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-    /* APP_JS_START */
     (function () {
       'use strict';
 
-      var WORDS = [
-        { id: 'makan', term: 'makan', answer: 'to eat' },
-        { id: 'minum', term: 'minum', answer: 'to drink' },
-        { id: 'rumah', term: 'rumah', answer: 'house / home' },
-        { id: 'pasar', term: 'pasar', answer: 'market' },
-        { id: 'buku', term: 'buku', answer: 'book' },
-        { id: 'teman', term: 'teman', answer: 'friend' },
-        { id: 'hari', term: 'hari', answer: 'day' },
-        { id: 'besok', term: 'besok', answer: 'tomorrow' },
-        { id: 'kemarin', term: 'kemarin', answer: 'yesterday' },
-        { id: 'sekolah', term: 'sekolah', answer: 'school' },
-        { id: 'jalan', term: 'jalan', answer: 'road / to walk' },
-        { id: 'belajar', term: 'belajar', answer: 'to study / learn' }
+      var VERSION = 'full-dark-v3';
+      var TODAY = new Date().toISOString().slice(0, 10);
+      var DEFAULT_WORDS = [
+        { id: 'makan', category: 'Essentials', term: 'makan', answer: 'to eat', example: 'Saya makan nasi.' },
+        { id: 'minum', category: 'Essentials', term: 'minum', answer: 'to drink', example: 'Aku minum air.' },
+        { id: 'belajar', category: 'Essentials', term: 'belajar', answer: 'to study / learn', example: 'Saya belajar bahasa Indonesia.' },
+        { id: 'mengerti', category: 'Essentials', term: 'mengerti', answer: 'to understand', example: 'Saya tidak mengerti.' },
+        { id: 'bisa', category: 'Essentials', term: 'bisa', answer: 'can / able to', example: 'Bisa bantu saya?' },
+        { id: 'ingin', category: 'Essentials', term: 'ingin', answer: 'to want / would like', example: 'Saya ingin membeli buku.' },
+        { id: 'mau', category: 'Informal', term: 'mau', answer: 'want', example: 'Aku mau makan.' },
+        { id: 'nggak', category: 'Informal', term: 'nggak', answer: 'no / not', example: 'Aku nggak tahu.' },
+        { id: 'makasih', category: 'Informal', term: 'makasih', answer: 'thanks', example: 'Makasih banyak.' },
+        { id: 'rumah', category: 'Places', term: 'rumah', answer: 'house / home', example: 'Saya pulang ke rumah.' },
+        { id: 'pasar', category: 'Places', term: 'pasar', answer: 'market', example: 'Saya pergi ke pasar.' },
+        { id: 'toko', category: 'Places', term: 'toko', answer: 'store', example: 'Dia pergi ke toko.' },
+        { id: 'sekolah', category: 'Places', term: 'sekolah', answer: 'school', example: 'Anak itu pergi ke sekolah.' },
+        { id: 'kamar mandi', category: 'Places', term: 'kamar mandi', answer: 'bathroom', example: 'Di mana kamar mandi?' },
+        { id: 'nasi', category: 'Food', term: 'nasi', answer: 'rice / cooked rice', example: 'Saya makan nasi.' },
+        { id: 'air', category: 'Food', term: 'air', answer: 'water', example: 'Saya minum air.' },
+        { id: 'kopi', category: 'Food', term: 'kopi', answer: 'coffee', example: 'Saya mau kopi.' },
+        { id: 'buku', category: 'Objects', term: 'buku', answer: 'book', example: 'Saya membeli buku.' },
+        { id: 'teman', category: 'People', term: 'teman', answer: 'friend', example: 'Dia teman saya.' },
+        { id: 'keluarga', category: 'People', term: 'keluarga', answer: 'family', example: 'Keluarga saya di rumah.' },
+        { id: 'hari ini', category: 'Time', term: 'hari ini', answer: 'today', example: 'Hari ini saya belajar.' },
+        { id: 'besok', category: 'Time', term: 'besok', answer: 'tomorrow', example: 'Besok saya pergi.' },
+        { id: 'kemarin', category: 'Time', term: 'kemarin', answer: 'yesterday', example: 'Kemarin saya belajar.' }
       ];
 
-      var PHRASES = [
-        { id: 'apa-kabar', term: 'Apa kabar?', answer: 'How are you?' },
-        { id: 'terima-kasih', term: 'Terima kasih.', answer: 'Thank you.' },
-        { id: 'sama-sama', term: 'Sama-sama.', answer: 'You are welcome.' },
-        { id: 'selamat-pagi', term: 'Selamat pagi.', answer: 'Good morning.' },
-        { id: 'permisi', term: 'Permisi.', answer: 'Excuse me.' },
-        { id: 'maaf', term: 'Maaf.', answer: 'Sorry.' },
-        { id: 'saya-tidak-mengerti', term: 'Saya tidak mengerti.', answer: 'I do not understand.' },
-        { id: 'bisa-bantu', term: 'Bisa bantu saya?', answer: 'Can you help me?' },
-        { id: 'saya-mau', term: 'Saya mau ini.', answer: 'I want this.' },
-        { id: 'di-mana', term: 'Di mana kamar mandi?', answer: 'Where is the bathroom?' }
+      var DEFAULT_PHRASES = [
+        { id: 'apa-kabar', category: 'Greetings', term: 'Apa kabar?', answer: 'How are you?', example: 'Neutral and common.' },
+        { id: 'baik-baik', category: 'Greetings', term: 'Baik-baik saja.', answer: 'I am fine.', example: 'A simple response.' },
+        { id: 'selamat-pagi', category: 'Greetings', term: 'Selamat pagi.', answer: 'Good morning.', example: 'Formal / polite.' },
+        { id: 'selamat-siang', category: 'Greetings', term: 'Selamat siang.', answer: 'Good afternoon.', example: 'Used around midday.' },
+        { id: 'terima-kasih', category: 'Polite', term: 'Terima kasih.', answer: 'Thank you.', example: 'Formal and polite.' },
+        { id: 'sama-sama', category: 'Polite', term: 'Sama-sama.', answer: 'You are welcome.', example: 'Response to thanks.' },
+        { id: 'permisi', category: 'Polite', term: 'Permisi.', answer: 'Excuse me.', example: 'When entering or passing.' },
+        { id: 'maaf', category: 'Polite', term: 'Maaf.', answer: 'Sorry / excuse me.', example: 'Polite apology.' },
+        { id: 'bisa-bantu', category: 'Help', term: 'Bisa bantu saya?', answer: 'Can you help me?', example: 'Polite request.' },
+        { id: 'tidak-mengerti', category: 'Help', term: 'Saya tidak mengerti.', answer: 'I do not understand.', example: 'Formal / clear.' },
+        { id: 'di-mana', category: 'Travel', term: 'Di mana kamar mandi?', answer: 'Where is the bathroom?', example: 'Question pattern.' },
+        { id: 'berapa-harga', category: 'Travel', term: 'Berapa harganya?', answer: 'How much is it?', example: 'Shopping phrase.' },
+        { id: 'saya-mau-ini', category: 'Shopping', term: 'Saya mau ini.', answer: 'I want this.', example: 'Simple request.' },
+        { id: 'mau-pesan', category: 'Food', term: 'Saya mau pesan makanan.', answer: 'I want to order food.', example: 'Restaurant phrase.' },
+        { id: 'makasih-banyak', category: 'Informal', term: 'Makasih banyak.', answer: 'Thanks a lot.', example: 'Casual.' },
+        { id: 'aku-nggak-tahu', category: 'Informal', term: 'Aku nggak tahu.', answer: 'I do not know.', example: 'Casual.' }
       ];
+
+      var SPELLING_EXCEPTIONS = {
+        aq: 'aku', gw: 'aku', gue: 'aku', lo: 'kamu', lu: 'kamu', sy: 'saya', sayaaku: 'saya',
+        gk: 'nggak', gak: 'nggak', ga: 'nggak', ngak: 'nggak', ngga: 'nggak', kaga: 'nggak',
+        tdak: 'tidak', tidk: 'tidak', tidka: 'tidak',
+        makn: 'makan', makann: 'makan', mmakan: 'makan',
+        minm: 'minum', mnum: 'minum',
+        bukku: 'buku', buuku: 'buku',
+        beljar: 'belajar', blajar: 'belajar',
+        mengeerti: 'mengerti', mengrti: 'mengerti',
+        trimakasih: 'terima kasih', terimakasih: 'terima kasih', trima: 'terima',
+        dimna: 'di mana', dimana: 'di mana', kmana: 'ke mana', kemana: 'ke mana',
+        pengin: 'pengen', pngen: 'pengen',
+        klo: 'kalau', kalo: 'kalau',
+        krn: 'karena', karna: 'karena',
+        dgn: 'dengan', dg: 'dengan',
+        dr: 'dari', utk: 'untuk', yg: 'yang',
+        tolongg: 'tolong',
+        pasarr: 'pasar', ruma: 'rumah', skolah: 'sekolah'
+      };
+
+      var DICTIONARY = [
+        'aku','anda','apa','air','akan','anak','atas','atau','baik','banyak','baru','bantu','bahasa','belajar','beli','belum','berapa','bertemu','besok','bisa','buku','dan','dari','datang','dengan','dia','di','dimana','di mana','ingin','ini','itu','jalan','jam','juga','kabar','kalau','kamar','kasih','kecil','keluarga','ke','kemarin','kenapa','kopi','lagi','makan','makasih','mandi','mau','membeli','mengerti','minum','nasi','nggak','orang','pagi','pasar','pergi','permisi','pengen','pulang','rumah','sama','saya','sekolah','selamat','siang','sore','sudah','tahu','teman','terima','tidak','toko','tolong','untuk','yang'
+      ];
+
+      function $(id) { return document.getElementById(id); }
+
+      function safeParse(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function saveJson(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
 
       function escapeHtml(value) {
-        return String(value)
+        return String(value == null ? '' : value)
           .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
@@ -623,404 +886,587 @@
           .replace(/'/g, '&#039;');
       }
 
-      function normalizeText(text) {
+      function stripDiacritics(value) {
+        return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      }
+
+      function normalizeSpaces(text) {
         return String(text || '')
-          .replace(/\s+/g, ' ')
-          .replace(/\s+([,.!?])/g, '$1')
+          .replace(/\r\n/g, '\n')
+          .replace(/[\t ]+/g, ' ')
+          .replace(/\s+([,.!?;:])/g, '$1')
+          .replace(/([,.!?;:])(?=\S)/g, '$1 ')
           .trim();
       }
 
-      function capitalizeSentence(text) {
-        return text.replace(/(^\s*[a-zà-ÿ])|([.!?]\s+[a-zà-ÿ])/g, function (match) {
-          return match.toUpperCase();
+      function capitalizeIndonesian(text) {
+        return String(text || '').replace(/(^|[.!?]\s+|\n\s*)([a-zà-ÿ])/g, function (match, prefix, letter) {
+          return prefix + letter.toUpperCase();
         });
       }
 
       function tokenize(text) {
-        var matches = String(text || '').toLowerCase().match(/[a-zà-ÿ]+|[0-9]+|[^\s]/gi);
-        return matches || [];
+        return String(text || '').match(/[A-Za-zÀ-ÿ]+|[0-9]+|[^\sA-Za-zÀ-ÿ0-9]/g) || [];
+      }
+
+      function wordsOnly(text) {
+        return (String(text || '').toLowerCase().match(/[a-zà-ÿ]+/g) || []).map(stripDiacritics);
       }
 
       function levenshtein(a, b) {
-        a = String(a || '').toLowerCase();
-        b = String(b || '').toLowerCase();
+        a = stripDiacritics(String(a || '').toLowerCase());
+        b = stripDiacritics(String(b || '').toLowerCase());
         var matrix = [];
-        var i;
-        var j;
+        var i, j;
         for (i = 0; i <= b.length; i += 1) matrix[i] = [i];
         for (j = 0; j <= a.length; j += 1) matrix[0][j] = j;
         for (i = 1; i <= b.length; i += 1) {
           for (j = 1; j <= a.length; j += 1) {
-            if (b.charAt(i - 1) === a.charAt(j - 1)) {
-              matrix[i][j] = matrix[i - 1][j - 1];
-            } else {
-              matrix[i][j] = Math.min(
-                matrix[i - 1][j - 1] + 1,
-                matrix[i][j - 1] + 1,
-                matrix[i - 1][j] + 1
-              );
-            }
+            if (b.charAt(i - 1) === a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
+            else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
           }
         }
         return matrix[b.length][a.length];
       }
 
-      var DICTIONARY = [
-        'aku', 'anda', 'apa', 'baik', 'bantu', 'bisa', 'buku', 'belajar', 'belum', 'besok', 'dan',
-        'dari', 'dengan', 'di', 'dia', 'hari', 'ini', 'ingin', 'jalan', 'kabar', 'kamar', 'kasih',
-        'ke', 'kemarin', 'makan', 'makasih', 'mau', 'membeli', 'mengerti', 'minum', 'nggak', 'nasi',
-        'pasar', 'pagi', 'permisi', 'rumah', 'sama', 'saya', 'sekolah', 'selamat', 'siang', 'sore',
-        'sudah', 'teman', 'terima', 'tidak', 'tolong', 'untuk', 'yang'
-      ];
-
-      var SPELLING_EXCEPTIONS = {
-        makn: 'makan',
-        makann: 'makan',
-        trimakasih: 'terima kasih',
-        terimakasih: 'terima kasih',
-        gk: 'nggak',
-        ga: 'nggak',
-        nggak: 'nggak',
-        enggak: 'nggak',
-        ngga: 'nggak',
-        sya: 'saya',
-        ak: 'aku',
-        dgn: 'dengan'
-      };
-
-      function bestSpelling(token) {
-        var lower = token.toLowerCase();
-        if (!/^[a-zà-ÿ]+$/i.test(lower)) return token;
+      function bestSpelling(word) {
+        var lower = stripDiacritics(String(word || '').toLowerCase());
+        if (!lower || lower.length <= 1) return word;
         if (SPELLING_EXCEPTIONS[lower]) return SPELLING_EXCEPTIONS[lower];
-        if (DICTIONARY.indexOf(lower) !== -1) return lower;
-        var best = lower;
-        var bestDistance = 999;
-        DICTIONARY.forEach(function (word) {
-          var distance = levenshtein(lower, word);
+        if (DICTIONARY.indexOf(lower) !== -1) return word;
+        var best = word;
+        var bestDistance = 99;
+        DICTIONARY.forEach(function (candidate) {
+          if (candidate.indexOf(' ') !== -1) return;
+          var distance = levenshtein(lower, candidate);
           if (distance < bestDistance) {
+            best = candidate;
             bestDistance = distance;
-            best = word;
           }
         });
-        if (lower.length >= 4 && bestDistance <= 1) return best;
-        if (lower.length >= 6 && bestDistance <= 2) return best;
-        return lower;
+        var threshold = lower.length <= 4 ? 1 : 2;
+        return bestDistance <= threshold ? best : word;
       }
 
-      function applyRegister(text, register, notes) {
-        var out = text;
+      function applySpelling(text, changes) {
+        return String(text || '').replace(/\b[A-Za-zÀ-ÿ]+\b/g, function (word) {
+          var fixed = bestSpelling(word);
+          if (fixed !== word) {
+            changes.spelling += 1;
+            changes.notes.push('Spelling adjusted: “' + word + '” → “' + fixed + '”.');
+          }
+          return fixed;
+        });
+      }
+
+      function applyTone(text, register, changes) {
+        var before = text;
         if (register === 'formal') {
-          out = out.replace(/\baku\b/gi, 'saya');
-          out = out.replace(/\bnggak\b|\bga\b|\bgak\b|\benggak\b/gi, 'tidak');
-          out = out.replace(/\bmakasih\b/gi, 'terima kasih');
-          if (/\baku\b|\bnggak\b|\bmakasih\b/i.test(text)) {
-            notes.push('Formal mode uses “saya,” “tidak,” and “terima kasih” more often than casual forms.');
+          text = text.replace(/\baku\b/gi, 'saya')
+            .replace(/\bkamu\b/gi, 'Anda')
+            .replace(/\bnggak\b|\bgak\b|\bga\b/gi, 'tidak')
+            .replace(/\bmakasih\b/gi, 'terima kasih')
+            .replace(/\bpengen\b/gi, 'ingin');
+          if (text !== before) {
+            changes.tone += 1;
+            changes.notes.push('Formal mode favors “saya,” “Anda,” “tidak,” “ingin,” and “terima kasih.”');
           }
         } else {
-          out = out.replace(/\bsaya\b/gi, 'aku');
-          out = out.replace(/\btidak\b/gi, 'nggak');
-          if (/\bsaya\b|\btidak\b/i.test(text)) {
-            notes.push('Informal mode allows casual forms like “aku” and “nggak.”');
+          text = text.replace(/\bterimakasih\b/gi, 'makasih');
+          if (text !== before) {
+            changes.tone += 1;
+            changes.notes.push('Informal mode allows relaxed forms like “aku,” “nggak,” and “makasih.”');
           }
         }
-        return out;
+        return text;
       }
 
-      function fixWordOrder(text, notes) {
-        var out = text;
-        var before = out;
-        out = out.replace(/\b(saya|aku)\s+(pergi|jalan)\s+([a-zà-ÿ]+)\s+ke\b/gi, '$1 $2 ke $3');
-        out = out.replace(/\b(saya|aku)\s+(nasi|buku|air|kopi|teh|bahasa)\s+(makan|minum|belajar|membeli)\b/gi, '$1 $3 $2');
-        out = out.replace(/\b(makan|minum|belajar|membeli)\s+(saya|aku)\b/gi, '$2 $1');
-        if (out !== before) {
-          notes.push('Word order was adjusted so the subject usually comes before the verb, and “ke” comes before the destination.');
+      function applyOrderRules(text, changes) {
+        var before = text;
+        var next = text;
+
+        next = next.replace(/\b(pergi|datang|pulang|jalan)\s+([a-zA-ZÀ-ÿ]+(?:\s+[a-zA-ZÀ-ÿ]+){0,2})\s+ke\b/gi, function (match, verb, place) {
+          changes.order += 1;
+          changes.notes.push('Word order adjusted: place marker “ke” usually comes before the destination, as in “' + verb.toLowerCase() + ' ke ' + place.toLowerCase() + '.”');
+          return verb + ' ke ' + place;
+        });
+
+        next = next.replace(/\b(pasar|rumah|sekolah|toko|kantor|kampus|restoran)\s+ke\b/gi, function (match, place) {
+          changes.order += 1;
+          changes.notes.push('Word order adjusted: “ke ' + place.toLowerCase() + '” is the usual direction phrase.');
+          return 'ke ' + place;
+        });
+
+        next = next.replace(/\b(saya|aku|anda|kamu|dia)\s+([a-zA-ZÀ-ÿ]+)\s+(makan|minum|membeli|belajar|mau|ingin)\b/gi, function (match, subject, object, verb) {
+          if (/^(nasi|air|buku|kopi|bahasa|makanan|minuman)$/i.test(object)) {
+            changes.order += 1;
+            changes.notes.push('Sentence structure adjusted: Indonesian usually follows subject + verb + object.');
+            return subject + ' ' + verb + ' ' + object;
+          }
+          return match;
+        });
+
+        next = next.replace(/\b(saya|aku)\s+(nasi|air|buku|kopi|makanan|minuman)\s+(makan|minum|beli|membeli)\b/gi, function (match, subject, object, verb) {
+          changes.order += 1;
+          changes.notes.push('Sentence structure adjusted: object moved after the verb.');
+          return subject + ' ' + verb + ' ' + object;
+        });
+
+        next = next.replace(/\b(kamar mandi|pasar|toko|sekolah|rumah)\s+di mana\b/gi, function (match, place) {
+          changes.order += 1;
+          changes.notes.push('Question structure adjusted: “Di mana...” usually starts the location question.');
+          return 'di mana ' + place;
+        });
+
+        return next !== before ? next : text;
+      }
+
+      function applyPhraseRules(text, changes) {
+        var before = text;
+        text = text.replace(/\bterima kasih\s+(saya|aku|anda|kamu|dia)\b/gi, function (match, subject) {
+          changes.punctuation += 1;
+          changes.notes.push('A comma was added after “terima kasih” because it opens the sentence like a polite phrase.');
+          return 'terima kasih, ' + subject;
+        });
+        return text !== before ? text : before;
+      }
+
+      function applyPunctuation(text, changes) {
+        var trimmed = text.trim();
+        if (!trimmed) return trimmed;
+        var isQuestion = /^(apa|apakah|di mana|dimana|ke mana|kemana|kapan|siapa|berapa|kenapa|mengapa|bagaimana|bolehkah|bisakah)\b/i.test(trimmed);
+        if (!/[.!?]$/.test(trimmed)) {
+          trimmed += isQuestion ? '?' : '.';
+          changes.punctuation += 1;
+          changes.notes.push(isQuestion ? 'A question mark was added because the sentence begins with a question word.' : 'Ending punctuation was added.');
+        } else if (isQuestion && !/\?$/.test(trimmed)) {
+          trimmed = trimmed.replace(/[.!]$/, '?');
+          changes.punctuation += 1;
+          changes.notes.push('Question punctuation was adjusted.');
         }
-        return out;
+        return trimmed;
       }
 
-      function diffHtml(original, corrected) {
-        var originalTokens = tokenize(original);
+      function classifyToken(token, originalWords, originalTokens, correctedTokens, index, changes) {
+        if (/^[.!?,;:]$/.test(token)) return changes.punctuation ? 'punctuation' : '';
+        var lower = stripDiacritics(token.toLowerCase());
+        var originalIndex = originalWords.indexOf(lower);
+        var correctedWordPosition = correctedTokens.slice(0, index + 1).filter(function (t) { return /^[A-Za-zÀ-ÿ]+$/.test(t); }).length - 1;
+        var toneWords = ['saya', 'anda', 'tidak', 'terima', 'kasih', 'ingin'];
+        if (changes.tone && toneWords.indexOf(lower) !== -1 && originalWords.some(function (w) { return ['aku','kamu','nggak','gak','ga','makasih','pengen'].indexOf(w) !== -1; })) return 'tone';
+        if (originalIndex === -1) {
+          var close = originalWords.some(function (word) { return levenshtein(word, lower) <= (lower.length <= 4 ? 1 : 2); });
+          if (close) return 'spelling';
+          return 'added';
+        }
+        if (changes.order && originalIndex !== correctedWordPosition) return 'moved';
+        return '';
+      }
+
+      function highlightCorrection(original, corrected, changes) {
+        var originalWords = wordsOnly(original);
+        var originalTokens = tokenize(original).map(function (t) { return stripDiacritics(t.toLowerCase()); });
         var correctedTokens = tokenize(corrected);
-        var output = [];
-        var originalIndex = 0;
-        correctedTokens.forEach(function (token) {
-          var lower = token.toLowerCase();
-          var foundAt = -1;
-          var i;
-          for (i = originalIndex; i < originalTokens.length; i += 1) {
-            if (originalTokens[i].toLowerCase() === lower) {
-              foundAt = i;
-              break;
-            }
-          }
-          var className = 'added';
-          if (foundAt === originalIndex) {
-            className = 'same';
-            originalIndex = foundAt + 1;
-          } else if (foundAt > originalIndex) {
-            className = 'changed';
-            originalIndex = foundAt + 1;
-          }
-          if (/^[,.!?]$/.test(token)) {
-            output.push('<span class="token ' + className + '">' + escapeHtml(token) + '</span>');
-          } else {
-            output.push('<span class="token ' + className + '">' + escapeHtml(token) + '</span>');
-          }
+        var html = '';
+        correctedTokens.forEach(function (token, index) {
+          var cls = classifyToken(token, originalWords, originalTokens, correctedTokens, index, changes);
+          var safe = escapeHtml(token);
+          if (cls) html += '<span class="mark ' + cls + '">' + safe + '</span>';
+          else html += safe;
+          var next = correctedTokens[index + 1];
+          if (next && !/^[,.!?;:]$/.test(next)) html += ' ';
         });
-        return output.join(' ');
+        return html;
       }
 
-      function correctSentence(input, register) {
-        var notes = [];
-        var raw = normalizeText(input);
+      function correctOneSentence(sentence, register) {
+        var raw = normalizeSpaces(sentence);
+        var changes = { spelling: 0, order: 0, punctuation: 0, tone: 0, notes: [] };
         if (!raw) {
-          return {
-            corrected: '',
-            html: '',
-            structureScore: 0,
-            spellingScore: 0,
-            totalScore: 0,
-            notes: ['Type a sentence first.']
-          };
+          return { raw: raw, corrected: '', html: '', changes: changes, scores: { structure: 0, spelling: 0, tone: 0, total: 0 } };
+        }
+        var corrected = raw.toLowerCase();
+        corrected = applySpelling(corrected, changes);
+        corrected = applyTone(corrected, register, changes);
+        corrected = applyOrderRules(corrected, changes);
+        corrected = applyPhraseRules(corrected, changes);
+        corrected = normalizeSpaces(corrected);
+        corrected = applyPunctuation(corrected, changes);
+        var beforeCap = corrected;
+        corrected = capitalizeIndonesian(corrected);
+        if (corrected !== beforeCap) {
+          changes.punctuation += 1;
+          changes.notes.push('Capitalization was adjusted at the beginning of the sentence.');
         }
 
-        var tokens = tokenize(raw);
-        var spellingChanges = 0;
-        var correctedTokens = [];
-        tokens.forEach(function (token) {
-          if (/^[a-zà-ÿ]+$/i.test(token)) {
-            var fixed = bestSpelling(token);
-            if (fixed !== token.toLowerCase()) spellingChanges += 1;
-            fixed.split(' ').forEach(function (part) { correctedTokens.push(part); });
-          } else {
-            correctedTokens.push(token);
-          }
-        });
-
-        var corrected = normalizeText(correctedTokens.join(' '));
-        if (spellingChanges > 0) {
-          notes.push('Spelling was corrected by comparing typed words with a small Indonesian practice dictionary.');
+        if (changes.notes.length === 0) {
+          changes.notes.push('This is already close. Try a longer sentence or a short paragraph next.');
         }
 
-        var beforeRegister = corrected;
-        corrected = applyRegister(corrected, register, notes);
-        corrected = normalizeText(corrected);
-        var beforeOrder = corrected;
-        corrected = fixWordOrder(corrected, notes);
-        corrected = normalizeText(corrected);
-
-        if (!/[.!?]$/.test(corrected)) {
-          corrected += '.';
-          notes.push('A period was added because the sentence needed ending punctuation.');
-        }
-        var beforeCapital = corrected;
-        corrected = capitalizeSentence(corrected);
-        if (corrected !== beforeCapital) {
-          notes.push('Capitalization was adjusted at the beginning of the sentence.');
-        }
-
-        if (corrected === capitalizeSentence(raw) || corrected === raw) {
-          notes.push('This is already close. Keep practicing with longer sentences.');
-        }
-
-        var structurePenalty = 0;
-        if (beforeOrder !== corrected.replace(/[.!?]$/, '').toLowerCase() && beforeRegister !== corrected) structurePenalty += 10;
-        if (/\b(pergi|jalan)\s+\w+\s+ke\b/i.test(raw)) structurePenalty += 18;
-        if (/\b(makan|minum|membeli|belajar)\s+(saya|aku)\b/i.test(raw)) structurePenalty += 14;
-        if (!/[.!?]$/.test(raw)) structurePenalty += 7;
-
-        var spellingPenalty = Math.min(70, spellingChanges * 16);
-        var registerPenalty = beforeRegister !== corrected ? 6 : 0;
-        var structureScore = Math.max(0, 100 - structurePenalty - registerPenalty);
-        var spellingScore = Math.max(0, 100 - spellingPenalty);
-        var totalScore = Math.round((structureScore + spellingScore) / 2);
-
+        var structureScore = Math.max(0, 100 - changes.order * 22 - Math.max(0, changes.punctuation - 1) * 8);
+        var spellingScore = Math.max(0, 100 - changes.spelling * 18);
+        var toneScore = Math.max(0, 100 - changes.tone * 14 - changes.punctuation * 6);
+        var totalScore = Math.round((structureScore * 0.42) + (spellingScore * 0.36) + (toneScore * 0.22));
         return {
+          raw: raw,
           corrected: corrected,
-          html: diffHtml(raw, corrected),
-          structureScore: structureScore,
-          spellingScore: spellingScore,
-          totalScore: totalScore,
-          notes: notes
+          html: highlightCorrection(raw, corrected, changes),
+          changes: changes,
+          scores: { structure: structureScore, spelling: spellingScore, tone: toneScore, total: totalScore }
         };
       }
 
-      window.IndoCore = {
-        correctSentence: correctSentence,
-        normalizeText: normalizeText,
-        bestSpelling: bestSpelling,
-        levenshtein: levenshtein
-      };
-
-      document.addEventListener('DOMContentLoaded', function () {
-        var state = {
-          points: Number(localStorage.getItem('indo_points') || 0),
-          wordIndex: Number(localStorage.getItem('indo_word_index') || 0),
-          phraseIndex: Number(localStorage.getItem('indo_phrase_index') || 0),
-          wordFlipped: false,
-          phraseFlipped: false,
-          register: localStorage.getItem('indo_register') || 'informal'
-        };
-
-        var el = {
-          points: document.getElementById('points'),
-          tabs: Array.prototype.slice.call(document.querySelectorAll('.tab')),
-          screens: Array.prototype.slice.call(document.querySelectorAll('.screen')),
-          wordCard: document.getElementById('word-card'),
-          phraseCard: document.getElementById('phrase-card'),
-          wordList: document.getElementById('word-list'),
-          phraseList: document.getElementById('phrase-list'),
-          toast: document.getElementById('toast'),
-          input: document.getElementById('sentence-input'),
-          results: document.getElementById('results'),
-          corrected: document.getElementById('corrected'),
-          structure: document.getElementById('structure-score'),
-          spelling: document.getElementById('spelling-score'),
-          total: document.getElementById('total-score'),
-          explain: document.getElementById('explain'),
-          informalBtn: document.getElementById('informal-btn'),
-          formalBtn: document.getElementById('formal-btn')
-        };
-
-        function save() {
-          localStorage.setItem('indo_points', String(state.points));
-          localStorage.setItem('indo_word_index', String(state.wordIndex));
-          localStorage.setItem('indo_phrase_index', String(state.phraseIndex));
-          localStorage.setItem('indo_register', state.register);
-        }
-
-        function setPoints(next, message) {
-          state.points = Math.max(0, next);
-          el.points.textContent = String(state.points);
-          save();
-          if (message) showToast(message);
-        }
-
-        function showToast(message) {
-          el.toast.textContent = message;
-          el.toast.classList.add('show');
-          window.clearTimeout(showToast.timer);
-          showToast.timer = window.setTimeout(function () {
-            el.toast.classList.remove('show');
-          }, 1700);
-        }
-
-        function renderCard(kind) {
-          var list = kind === 'word' ? WORDS : PHRASES;
-          var indexKey = kind === 'word' ? 'wordIndex' : 'phraseIndex';
-          var flippedKey = kind === 'word' ? 'wordFlipped' : 'phraseFlipped';
-          var card = kind === 'word' ? el.wordCard : el.phraseCard;
-          var item = list[state[indexKey] % list.length];
-          card.innerHTML = '<div><div class="label">' + escapeHtml(kind) + '</div><div class="term">' + escapeHtml(item.term) + '</div>' +
-            (state[flippedKey] ? '<div class="answer">' + escapeHtml(item.answer) + '</div>' : '<div class="answer">Tap to reveal</div>') + '</div>';
-        }
-
-        function nextCard(kind, delta) {
-          var list = kind === 'word' ? WORDS : PHRASES;
-          var indexKey = kind === 'word' ? 'wordIndex' : 'phraseIndex';
-          var flippedKey = kind === 'word' ? 'wordFlipped' : 'phraseFlipped';
-          state[indexKey] = (state[indexKey] + delta + list.length) % list.length;
-          state[flippedKey] = false;
-          save();
-          renderCard(kind);
-        }
-
-        function markCard(kind, amount) {
-          if (amount > 0) {
-            setPoints(state.points + amount, '+10 points');
-          } else {
-            setPoints(state.points + amount, '-2 points for review');
-          }
-          nextCard(kind, 1);
-        }
-
-        function renderLists() {
-          el.wordList.innerHTML = WORDS.slice(0, 6).map(function (item) {
-            return '<div class="mini-card"><strong>' + escapeHtml(item.term) + '</strong><span>' + escapeHtml(item.answer) + '</span></div>';
-          }).join('');
-          el.phraseList.innerHTML = PHRASES.slice(0, 6).map(function (item) {
-            return '<div class="mini-card"><strong>' + escapeHtml(item.term) + '</strong><span>' + escapeHtml(item.answer) + '</span></div>';
-          }).join('');
-        }
-
-        function setRegister(value) {
-          state.register = value;
-          el.informalBtn.classList.toggle('active', value === 'informal');
-          el.formalBtn.classList.toggle('active', value === 'formal');
-          save();
-        }
-
-        function checkSentence() {
-          var result = correctSentence(el.input.value, state.register);
-          el.results.classList.add('show');
-          el.corrected.innerHTML = result.html || escapeHtml(result.corrected);
-          el.structure.textContent = result.structureScore + '%';
-          el.spelling.textContent = result.spellingScore + '%';
-          el.total.textContent = result.totalScore + '%';
-          el.explain.innerHTML = result.notes.map(function (note) {
-            return '<p>' + escapeHtml(note) + '</p>';
-          }).join('');
-
-          if (result.corrected) {
-            var earned = Math.max(1, Math.round(result.totalScore / 12));
-            var penalty = result.totalScore < 90 ? Math.ceil(state.points * ((100 - result.totalScore) / 100) * 0.04) : 0;
-            var net = earned - penalty;
-            setPoints(state.points + net, net >= 0 ? '+' + net + ' sentence points' : String(net) + ' point penalty');
-          }
-        }
-
-        el.tabs.forEach(function (tab) {
-          tab.addEventListener('click', function () {
-            var screenId = tab.getAttribute('data-screen');
-            el.tabs.forEach(function (t) { t.classList.toggle('active', t === tab); });
-            el.screens.forEach(function (s) { s.classList.toggle('active', s.id === screenId); });
+      function splitIntoPracticeUnits(text) {
+        var lines = String(text || '').split(/\n+/).map(function (line) { return line.trim(); }).filter(Boolean);
+        var units = [];
+        lines.forEach(function (line) {
+          var parts = line.match(/[^.!?]+[.!?]?/g) || [line];
+          parts.forEach(function (part) {
+            var cleaned = part.trim();
+            if (cleaned) units.push(cleaned);
           });
         });
+        return units;
+      }
 
-        el.wordCard.addEventListener('click', function () { state.wordFlipped = !state.wordFlipped; renderCard('word'); });
-        el.phraseCard.addEventListener('click', function () { state.phraseFlipped = !state.phraseFlipped; renderCard('phrase'); });
-        el.wordCard.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); el.wordCard.click(); } });
-        el.phraseCard.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); el.phraseCard.click(); } });
-
-        document.getElementById('word-prev').addEventListener('click', function () { nextCard('word', -1); });
-        document.getElementById('word-known').addEventListener('click', function () { markCard('word', 10); });
-        document.getElementById('word-review').addEventListener('click', function () { markCard('word', -2); });
-        document.getElementById('phrase-prev').addEventListener('click', function () { nextCard('phrase', -1); });
-        document.getElementById('phrase-known').addEventListener('click', function () { markCard('phrase', 10); });
-        document.getElementById('phrase-review').addEventListener('click', function () { markCard('phrase', -2); });
-
-        document.getElementById('check-sentence').addEventListener('click', checkSentence);
-        document.getElementById('clear-sentence').addEventListener('click', function () {
-          el.input.value = '';
-          el.results.classList.remove('show');
-          el.input.focus();
+      function correctText(text, register) {
+        var units = splitIntoPracticeUnits(text);
+        if (units.length === 0) {
+          return {
+            corrected: '', html: '', notes: ['Type a sentence or short paragraph first.'],
+            scores: { structure: 0, spelling: 0, tone: 0, total: 0 }, counts: { spelling: 0, order: 0, punctuation: 0, tone: 0 }
+          };
+        }
+        var results = units.map(function (unit) { return correctOneSentence(unit, register); });
+        var totals = { structure: 0, spelling: 0, tone: 0, total: 0 };
+        var counts = { spelling: 0, order: 0, punctuation: 0, tone: 0 };
+        var notes = [];
+        results.forEach(function (result) {
+          totals.structure += result.scores.structure;
+          totals.spelling += result.scores.spelling;
+          totals.tone += result.scores.tone;
+          totals.total += result.scores.total;
+          counts.spelling += result.changes.spelling;
+          counts.order += result.changes.order;
+          counts.punctuation += result.changes.punctuation;
+          counts.tone += result.changes.tone;
+          result.changes.notes.forEach(function (note) {
+            if (notes.indexOf(note) === -1) notes.push(note);
+          });
         });
-        el.input.addEventListener('keydown', function (event) {
+        Object.keys(totals).forEach(function (key) { totals[key] = Math.round(totals[key] / results.length); });
+        if (results.length > 1) notes.unshift('Paragraph mode: ' + results.length + ' sentence/line units were checked together.');
+        return {
+          corrected: results.map(function (r) { return r.corrected; }).join('\n'),
+          html: results.map(function (r) { return r.html; }).join('\n'),
+          notes: notes,
+          scores: totals,
+          counts: counts
+        };
+      }
+
+      var state = {
+        points: Number(localStorage.getItem('indo_full_points') || 0),
+        streak: Number(localStorage.getItem('indo_full_streak') || 0),
+        lastPractice: localStorage.getItem('indo_full_last_practice') || '',
+        checkedToday: Number(localStorage.getItem('indo_full_checked_' + TODAY) || 0),
+        register: localStorage.getItem('indo_full_register') || 'informal',
+        wordIndex: Number(localStorage.getItem('indo_full_word_index') || 0),
+        phraseIndex: Number(localStorage.getItem('indo_full_phrase_index') || 0),
+        wordFlipped: false,
+        phraseFlipped: false,
+        wordCategory: localStorage.getItem('indo_full_word_category') || 'All',
+        phraseCategory: localStorage.getItem('indo_full_phrase_category') || 'All',
+        customWords: safeParse('indo_full_custom_words', []),
+        customPhrases: safeParse('indo_full_custom_phrases', []),
+        history: safeParse('indo_full_history', [])
+      };
+
+      function allWords() { return DEFAULT_WORDS.concat(state.customWords); }
+      function allPhrases() { return DEFAULT_PHRASES.concat(state.customPhrases); }
+
+      function categories(items) {
+        var list = ['All'];
+        items.forEach(function (item) {
+          if (list.indexOf(item.category || 'Custom') === -1) list.push(item.category || 'Custom');
+        });
+        return list;
+      }
+
+      function filteredWords() {
+        return allWords().filter(function (item) { return state.wordCategory === 'All' || item.category === state.wordCategory; });
+      }
+
+      function filteredPhrases() {
+        return allPhrases().filter(function (item) { return state.phraseCategory === 'All' || item.category === state.phraseCategory; });
+      }
+
+      function saveState() {
+        localStorage.setItem('indo_full_points', String(state.points));
+        localStorage.setItem('indo_full_streak', String(state.streak));
+        localStorage.setItem('indo_full_last_practice', state.lastPractice);
+        localStorage.setItem('indo_full_checked_' + TODAY, String(state.checkedToday));
+        localStorage.setItem('indo_full_register', state.register);
+        localStorage.setItem('indo_full_word_index', String(state.wordIndex));
+        localStorage.setItem('indo_full_phrase_index', String(state.phraseIndex));
+        localStorage.setItem('indo_full_word_category', state.wordCategory);
+        localStorage.setItem('indo_full_phrase_category', state.phraseCategory);
+        saveJson('indo_full_custom_words', state.customWords);
+        saveJson('indo_full_custom_phrases', state.customPhrases);
+        saveJson('indo_full_history', state.history.slice(0, 40));
+        $('saveStatus').textContent = 'Saved locally';
+      }
+
+      function toast(message) {
+        var el = $('toast');
+        el.textContent = message;
+        el.classList.add('show');
+        window.clearTimeout(toast.timer);
+        toast.timer = window.setTimeout(function () { el.classList.remove('show'); }, 1800);
+      }
+
+      function updateStreak() {
+        if (state.lastPractice === TODAY) return;
+        var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        state.streak = state.lastPractice === yesterday ? state.streak + 1 : 1;
+        state.lastPractice = TODAY;
+      }
+
+      function setPoints(value, message) {
+        state.points = Math.max(0, Math.round(value));
+        saveState();
+        renderMetrics();
+        if (message) toast(message);
+      }
+
+      function renderMetrics() {
+        $('points').textContent = String(state.points);
+        $('streak').textContent = String(state.streak);
+        $('checkedToday').textContent = String(state.checkedToday);
+        $('dashPoints').textContent = String(state.points);
+        $('dashHistory').textContent = String(state.history.length);
+        $('dashWords').textContent = String(allWords().length);
+        $('dashPhrases').textContent = String(allPhrases().length);
+      }
+
+      function renderSelect(selectId, values, selected) {
+        var select = $(selectId);
+        select.innerHTML = values.map(function (value) {
+          return '<option value="' + escapeHtml(value) + '"' + (value === selected ? ' selected' : '') + '>' + escapeHtml(value) + '</option>';
+        }).join('');
+      }
+
+      function cardHtml(item, label, flipped) {
+        if (!item) {
+          return '<div><div class="card-label">' + escapeHtml(label) + '</div><div class="term">Empty deck</div><div class="answer">Add a custom card to begin.</div></div>';
+        }
+        return '<div><div class="card-label">' + escapeHtml(label + ' • ' + (item.category || 'Custom')) + '</div><div class="term">' + escapeHtml(item.term) + '</div>' +
+          (flipped ? '<div class="answer">' + escapeHtml(item.answer) + '</div><div class="example-line">' + escapeHtml(item.example || '') + '</div>' : '<div class="answer">Tap to reveal</div>') + '</div>';
+      }
+
+      function renderCard(kind) {
+        var list = kind === 'word' ? filteredWords() : filteredPhrases();
+        var indexKey = kind === 'word' ? 'wordIndex' : 'phraseIndex';
+        var flippedKey = kind === 'word' ? 'wordFlipped' : 'phraseFlipped';
+        var cardId = kind === 'word' ? 'wordCard' : 'phraseCard';
+        if (state[indexKey] >= list.length) state[indexKey] = 0;
+        $(cardId).innerHTML = cardHtml(list[state[indexKey]], kind, state[flippedKey]);
+      }
+
+      function renderLists() {
+        $('wordList').innerHTML = filteredWords().slice(0, 10).map(function (item) {
+          return '<div class="mini-card"><strong>' + escapeHtml(item.term) + '</strong><span>' + escapeHtml(item.answer) + '</span><small>' + escapeHtml(item.example || '') + '</small></div>';
+        }).join('') || '<div class="mini-card"><span>No words in this category.</span></div>';
+        $('phraseList').innerHTML = filteredPhrases().slice(0, 10).map(function (item) {
+          return '<div class="mini-card"><strong>' + escapeHtml(item.term) + '</strong><span>' + escapeHtml(item.answer) + '</span><small>' + escapeHtml(item.example || '') + '</small></div>';
+        }).join('') || '<div class="mini-card"><span>No phrases in this category.</span></div>';
+      }
+
+      function renderDecks() {
+        renderSelect('wordCategory', categories(allWords()), state.wordCategory);
+        renderSelect('phraseCategory', categories(allPhrases()), state.phraseCategory);
+        renderCard('word');
+        renderCard('phrase');
+        renderLists();
+        renderMetrics();
+      }
+
+      function nextCard(kind, delta) {
+        var list = kind === 'word' ? filteredWords() : filteredPhrases();
+        if (!list.length) return;
+        var indexKey = kind === 'word' ? 'wordIndex' : 'phraseIndex';
+        var flippedKey = kind === 'word' ? 'wordFlipped' : 'phraseFlipped';
+        state[indexKey] = (state[indexKey] + delta + list.length) % list.length;
+        state[flippedKey] = false;
+        saveState();
+        renderCard(kind);
+      }
+
+      function markCard(kind, amount) {
+        updateStreak();
+        var message = amount > 0 ? '+10 points' : '-2 review points';
+        setPoints(state.points + amount, message);
+        nextCard(kind, 1);
+      }
+
+      function setScreen(id) {
+        Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tab) {
+          tab.classList.toggle('active', tab.getAttribute('data-screen') === id);
+        });
+        Array.prototype.forEach.call(document.querySelectorAll('.screen'), function (screen) {
+          screen.classList.toggle('active', screen.id === id);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function setRegister(value) {
+        state.register = value;
+        $('informalBtn').classList.toggle('active', value === 'informal');
+        $('formalBtn').classList.toggle('active', value === 'formal');
+        saveState();
+      }
+
+      function checkSentence() {
+        var input = $('sentenceInput').value;
+        var result = correctText(input, state.register);
+        $('results').classList.add('show');
+        $('corrected').innerHTML = result.html || escapeHtml(result.corrected);
+        $('structureScore').textContent = result.scores.structure + '%';
+        $('spellingScore').textContent = result.scores.spelling + '%';
+        $('toneScore').textContent = result.scores.tone + '%';
+        $('totalScore').textContent = result.scores.total + '%';
+        $('explain').innerHTML = result.notes.map(function (note) { return '<p>' + escapeHtml(note) + '</p>'; }).join('');
+
+        if (result.corrected) {
+          updateStreak();
+          state.checkedToday += 1;
+          var earned = Math.max(1, Math.round(result.scores.total / 10));
+          var penalty = result.scores.total < 90 ? Math.ceil(state.points * ((100 - result.scores.total) / 100) * 0.035) : 0;
+          var net = earned - penalty;
+          state.history.unshift({
+            at: new Date().toLocaleString(),
+            register: state.register,
+            original: normalizeSpaces(input),
+            corrected: result.corrected,
+            scores: result.scores,
+            net: net
+          });
+          state.history = state.history.slice(0, 40);
+          setPoints(state.points + net, net >= 0 ? '+' + net + ' sentence points' : net + ' point penalty');
+          renderHistory();
+        }
+      }
+
+      function renderHistory() {
+        var list = $('historyList');
+        if (!state.history.length) {
+          list.innerHTML = '<div class="mini-card"><strong>No sentence checks yet.</strong><span>Use Sentence Coach to start saving practice history.</span></div>';
+          renderMetrics();
+          return;
+        }
+        list.innerHTML = state.history.slice(0, 12).map(function (item) {
+          return '<div class="history-item"><strong>' + escapeHtml(item.scores.total + '% • ' + item.register) + '</strong><br><span class="tiny">' + escapeHtml(item.at) + ' • ' + (item.net >= 0 ? '+' : '') + escapeHtml(item.net) + ' points</span><br><small class="muted">Original:</small> <code>' + escapeHtml(item.original) + '</code><br><small class="muted">Corrected:</small> <code>' + escapeHtml(item.corrected) + '</code></div>';
+        }).join('');
+        renderMetrics();
+      }
+
+      function addCustom(kind) {
+        var termId = kind === 'word' ? 'newWordTerm' : 'newPhraseTerm';
+        var answerId = kind === 'word' ? 'newWordAnswer' : 'newPhraseAnswer';
+        var exampleId = kind === 'word' ? 'newWordExample' : 'newPhraseExample';
+        var term = $(termId).value.trim();
+        var answer = $(answerId).value.trim();
+        var example = $(exampleId).value.trim();
+        if (!term || !answer) {
+          toast('Add both Indonesian and English fields');
+          return;
+        }
+        var item = { id: 'custom-' + Date.now(), category: 'Custom', term: term, answer: answer, example: example };
+        if (kind === 'word') state.customWords.push(item);
+        else state.customPhrases.push(item);
+        $(termId).value = '';
+        $(answerId).value = '';
+        $(exampleId).value = '';
+        saveState();
+        renderDecks();
+        toast(kind === 'word' ? 'Word added' : 'Phrase added');
+      }
+
+      function wire() {
+        Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tab) {
+          tab.addEventListener('click', function () { setScreen(tab.getAttribute('data-screen')); });
+        });
+        Array.prototype.forEach.call(document.querySelectorAll('.jump'), function (button) {
+          button.addEventListener('click', function () { setScreen(button.getAttribute('data-target')); });
+        });
+
+        $('wordCard').addEventListener('click', function () { state.wordFlipped = !state.wordFlipped; renderCard('word'); });
+        $('phraseCard').addEventListener('click', function () { state.phraseFlipped = !state.phraseFlipped; renderCard('phrase'); });
+        $('wordCard').addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); $('wordCard').click(); } });
+        $('phraseCard').addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); $('phraseCard').click(); } });
+
+        $('wordPrev').addEventListener('click', function () { nextCard('word', -1); });
+        $('wordKnown').addEventListener('click', function () { markCard('word', 10); });
+        $('wordReview').addEventListener('click', function () { markCard('word', -2); });
+        $('phrasePrev').addEventListener('click', function () { nextCard('phrase', -1); });
+        $('phraseKnown').addEventListener('click', function () { markCard('phrase', 10); });
+        $('phraseReview').addEventListener('click', function () { markCard('phrase', -2); });
+
+        $('wordCategory').addEventListener('change', function () { state.wordCategory = $('wordCategory').value; state.wordIndex = 0; state.wordFlipped = false; saveState(); renderDecks(); });
+        $('phraseCategory').addEventListener('change', function () { state.phraseCategory = $('phraseCategory').value; state.phraseIndex = 0; state.phraseFlipped = false; saveState(); renderDecks(); });
+        $('addWord').addEventListener('click', function () { addCustom('word'); });
+        $('addPhrase').addEventListener('click', function () { addCustom('phrase'); });
+
+        $('informalBtn').addEventListener('click', function () { setRegister('informal'); });
+        $('formalBtn').addEventListener('click', function () { setRegister('formal'); });
+        $('checkSentence').addEventListener('click', checkSentence);
+        $('clearSentence').addEventListener('click', function () { $('sentenceInput').value = ''; $('results').classList.remove('show'); $('sentenceInput').focus(); });
+        $('sentenceInput').addEventListener('keydown', function (event) {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             checkSentence();
           }
         });
-        document.querySelectorAll('.sample').forEach(function (button) {
+        Array.prototype.forEach.call(document.querySelectorAll('.sample'), function (button) {
           button.addEventListener('click', function () {
-            el.input.value = button.getAttribute('data-text') || '';
+            $('sentenceInput').value = button.getAttribute('data-text') || '';
+            setScreen('coach');
             checkSentence();
           });
         });
-        el.informalBtn.addEventListener('click', function () { setRegister('informal'); });
-        el.formalBtn.addEventListener('click', function () { setRegister('formal'); });
-        document.getElementById('reset-points').addEventListener('click', function () {
+
+        $('resetPoints').addEventListener('click', function () {
           setPoints(0, 'Points reset');
         });
+        $('resetAll').addEventListener('click', function () {
+          if (!window.confirm('Reset all saved progress, custom cards, and history?')) return;
+          Object.keys(localStorage).forEach(function (key) {
+            if (key.indexOf('indo_full_') === 0) localStorage.removeItem(key);
+          });
+          window.location.reload();
+        });
+      }
 
-        el.points.textContent = String(state.points);
-        renderLists();
+      function boot() {
+        localStorage.setItem('indo_full_version', VERSION);
         setRegister(state.register);
-        renderCard('word');
-        renderCard('phrase');
-      });
+        renderDecks();
+        renderHistory();
+        renderMetrics();
+        wire();
+      }
+
+      window.IndoCore = {
+        version: VERSION,
+        correctText: correctText,
+        correctOneSentence: correctOneSentence,
+        bestSpelling: bestSpelling,
+        tokenize: tokenize,
+        levenshtein: levenshtein
+      };
+
+      document.addEventListener('DOMContentLoaded', boot);
     }());
-    /* APP_JS_END */
   </script>
 </body>
 </html>
